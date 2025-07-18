@@ -1,97 +1,126 @@
-This is a new [**React Native**](https://reactnative.dev) project, bootstrapped using [`@react-native-community/cli`](https://github.com/react-native-community/cli).
+# PeriferiApp
 
-# Getting Started
+Aplicación móvil desarrollada con **React Native**, orientada a la gestión y visualización de información de usuarios, favoritos y detalles, siguiendo buenas prácticas de arquitectura y desarrollo de software moderno.
 
-> **Note**: Make sure you have completed the [Set Up Your Environment](https://reactnative.dev/docs/set-up-your-environment) guide before proceeding.
+---
 
-## Step 1: Start Metro
+## Tecnologías principales
 
-First, you will need to run **Metro**, the JavaScript build tool for React Native.
+- **React Native 0.80.1**: Framework principal para desarrollo multiplataforma.
+- **TypeScript**: Tipado estático para mayor robustez y mantenibilidad.
+- **React Navigation**: Navegación entre pantallas (stack y tabs).
+- **Zustand**: Manejo de estado global simple y eficiente.
+- **React Query**: Gestión de datos remotos, caché y sincronización.
+- **AsyncStorage**: Persistencia local de datos.
+- **React Native Vector Icons**: Iconografía moderna y personalizable.
+- **React Hook Form**: Manejo de formularios y validaciones.
+- **Jest & Testing Library**: Pruebas unitarias y de hooks.
+- **ESLint & Prettier**: Linting y formateo automático de código.
 
-To start the Metro dev server, run the following command from the root of your React Native project:
+---
 
-```sh
-# Using npm
-npm start
+## Arquitectura y estructura
 
-# OR using Yarn
-yarn start
-```
+- **Modular y escalable**: Separación clara por capas y dominios.
+  - `/src/presentation`: Pantallas, componentes UI y navegación.
+  - `/src/hooks`: Hooks personalizados para lógica reutilizable.
+  - `/src/store`: Estado global (Zustand) para autenticación, usuarios y favoritos.
+  - `/src/data/api`: Llamadas y hooks para consumo de APIs.
+  - `/src/data/storage`: Persistencia local (AsyncStorage).
+  - `/src/domain/models`: Tipos y modelos de negocio.
+- **Principio de responsabilidad única**: Cada módulo tiene una función clara.
+- **Separación de lógica de UI y datos**: La lógica de negocio y acceso a datos está desacoplada de la interfaz.
+- **Uso de hooks**: Para lógica compartida, side effects y gestión de estado local/global.
 
-## Step 2: Build and run your app
+---
 
-With Metro running, open a new terminal window/pane from the root of your React Native project, and use one of the following commands to build and run your Android or iOS app:
+## Buenas prácticas y principios aplicados
+
+- **Clean Code**: Nombres descriptivos, funciones pequeñas y legibles.
+- **DRY (Don't Repeat Yourself)**: Reutilización de lógica mediante hooks y utilidades.
+- **KISS (Keep It Simple, Stupid)**: Soluciones simples y directas.
+- **Testing**: Pruebas unitarias para hooks, stores y lógica de almacenamiento.
+- **Formateo y linting**: Uso de ESLint y Prettier en todo el proyecto.
+- **Control de versiones**: `.gitignore` bien configurado para excluir archivos temporales y dependencias.
+- **Internacionalización**: Preparado para soportar múltiples idiomas si se requiere.
+- **Accesibilidad**: Uso de componentes accesibles y buenas prácticas de UI.
+
+---
+
+## Dependencias principales
+
+- `react-native`
+- `react`
+- `@react-navigation/native` y stacks/tabs
+- `@tanstack/react-query`
+- `zustand`
+- `@react-native-async-storage/async-storage`
+- `react-native-vector-icons`
+- `react-hook-form`
+
+## Pruebas
+
+- **Jest** para pruebas unitarias.
+- **@testing-library/react-native** para pruebas de hooks y componentes.
+- Cobertura de pruebas para lógica de autenticación, favoritos y hooks personalizados.
+
+---
+
+## Ejecución y despliegue
 
 ### Android
 
 ```sh
-# Using npm
 npm run android
-
-# OR using Yarn
-yarn android
 ```
 
 ### iOS
 
-For iOS, remember to install CocoaPods dependencies (this only needs to be run on first clone or after updating native deps).
-
-The first time you create a new project, run the Ruby bundler to install CocoaPods itself:
-
 ```sh
-bundle install
-```
-
-Then, and every time you update your native dependencies, run:
-
-```sh
-bundle exec pod install
-```
-
-For more information, please visit [CocoaPods Getting Started guide](https://guides.cocoapods.org/using/getting-started.html).
-
-```sh
-# Using npm
 npm run ios
-
-# OR using Yarn
-yarn ios
 ```
 
-If everything is set up correctly, you should see your new app running in the Android Emulator, iOS Simulator, or your connected device.
+### Generar APK de producción
 
-This is one way to run your app — you can also build it directly from Android Studio or Xcode.
+```sh
+cd android
+./gradlew assembleRelease
+```
 
-## Step 3: Modify your app
+El APK estará en `android/app/build/outputs/apk/release/app-release.apk`
 
-Now that you have successfully run the app, let's make changes!
+---
 
-Open `App.tsx` in your text editor of choice and make some changes. When you save, your app will automatically update and reflect these changes — this is powered by [Fast Refresh](https://reactnative.dev/docs/fast-refresh).
+## Estructura de carpetas
 
-When you want to forcefully reload, for example to reset the state of your app, you can perform a full reload:
+```text
+periferiapp/
+├── android/
+├── ios/
+├── src/
+│   ├── presentation/
+│   ├── hooks/
+│   ├── store/
+│   ├── data/
+│   │   ├── api/
+│   │   ├── storage/
+│   ├── domain/
+│   │   └── models/
+├── App.js / App.tsx
+├── package.json
+├── README.md
+└── ...
+```
 
-- **Android**: Press the <kbd>R</kbd> key twice or select **"Reload"** from the **Dev Menu**, accessed via <kbd>Ctrl</kbd> + <kbd>M</kbd> (Windows/Linux) or <kbd>Cmd ⌘</kbd> + <kbd>M</kbd> (macOS).
-- **iOS**: Press <kbd>R</kbd> in iOS Simulator.
+---
 
-## Congratulations! :tada:
+## Recursos y enlaces útiles
 
-You've successfully run and modified your React Native App. :partying_face:
+- [React Native Docs](https://reactnative.dev/docs/getting-started)
+- [Zustand](https://docs.pmnd.rs/zustand/getting-started/introduction)
+- [React Query](https://tanstack.com/query/v5/docs/react-native/overview)
+- [React Navigation](https://reactnavigation.org/docs/getting-started)
+- [Testing Library](https://testing-library.com/docs/react-native-testing-library/intro/)
+- [AsyncStorage](https://react-native-async-storage.github.io/async-storage/)
 
-### Now what?
-
-- If you want to add this new React Native code to an existing application, check out the [Integration guide](https://reactnative.dev/docs/integration-with-existing-apps).
-- If you're curious to learn more about React Native, check out the [docs](https://reactnative.dev/docs/getting-started).
-
-# Troubleshooting
-
-If you're having issues getting the above steps to work, see the [Troubleshooting](https://reactnative.dev/docs/troubleshooting) page.
-
-# Learn More
-
-To learn more about React Native, take a look at the following resources:
-
-- [React Native Website](https://reactnative.dev) - learn more about React Native.
-- [Getting Started](https://reactnative.dev/docs/environment-setup) - an **overview** of React Native and how setup your environment.
-- [Learn the Basics](https://reactnative.dev/docs/getting-started) - a **guided tour** of the React Native **basics**.
-- [Blog](https://reactnative.dev/blog) - read the latest official React Native **Blog** posts.
-- [`@facebook/react-native`](https://github.com/facebook/react-native) - the Open Source; GitHub **repository** for React Native.
+---
