@@ -34,6 +34,16 @@ Aplicación móvil desarrollada con **React Native**, orientada a la gestión y 
 
 ---
 
+## ¿Cómo funciona la app?
+
+- Al abrir la aplicación, puedes visualizar una **lista de usuarios** disponibles.
+- Al seleccionar un usuario, accedes a la **pantalla de detalle**, donde puedes ver información ampliada de ese usuario.
+- Si deseas agregar usuarios a favoritos, primero debes **iniciar sesión** (autenticación básica).
+- Una vez autenticado, puedes **agregar uno o más usuarios a tu lista de favoritos**.
+- Puedes consultar tus usuarios favoritos desde la sección correspondiente en la app.
+
+---
+
 ## Buenas prácticas y principios aplicados
 
 - **Clean Code**: Nombres descriptivos, funciones pequeñas y legibles.
