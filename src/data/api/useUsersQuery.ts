@@ -1,11 +1,10 @@
 import { useQuery } from '@tanstack/react-query';
 import type { User } from '../../domain/models/User';
-
-import { fetchUsersApi } from './usersApi';
+import { userRepository } from '../repositories';
 
 export function useUsersQuery() {
   return useQuery<User[], Error>({
     queryKey: ['users'],
-    queryFn: fetchUsersApi,
+    queryFn: userRepository.getUsers,
   });
 }

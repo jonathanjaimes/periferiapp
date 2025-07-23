@@ -4,7 +4,7 @@ import { useFavoriteActions } from './useFavoriteActions';
 import type { User } from '../domain/models/User';
 
 export function useUserDetail(): {
-  userDetail: User | undefined;
+  userDetail: User | null | undefined;
   isLoading: boolean;
   isError: boolean;
   error: Error | null;
