@@ -1,28 +1,11 @@
 import React from 'react';
 import Icon from 'react-native-vector-icons/Ionicons';
-import {
-  View,
-  Text,
-  StyleSheet,
-  TouchableOpacity,
-  ActivityIndicator,
-} from 'react-native';
-import { useAuthStore } from '../../store/authStore';
+import { FavoriteButton } from '../../components/FavoriteButton';
+import { View, Text, StyleSheet, ActivityIndicator } from 'react-native';
 import { useUserDetail } from '../../hooks/useUserDetail';
 
 export default function UserDetailScreen() {
-  const {
-    userDetail,
-    isLoading,
-    isError,
-    error,
-    addFavorite,
-    removeFavorite,
-    isFavorite,
-    user,
-    userId,
-  } = useUserDetail();
-  const authUser = useAuthStore(state => state.user);
+  const { userDetail, isLoading, isError, error } = useUserDetail();
 
   if (isLoading) {
     return (
@@ -50,15 +33,6 @@ export default function UserDetailScreen() {
     );
   }
 
-  const handleFavorite = async () => {
-    if (!user || !userDetail) return;
-    if (isFavorite(userId)) {
-      await removeFavorite(user, userDetail.id);
-    } else {
-      await addFavorite(user, userDetail);
-    }
-  };
-
   return (
     <View style={styles.container}>
       <View style={styles.avatarContainer}>
@@ -66,33 +40,11 @@ export default function UserDetailScreen() {
       </View>
       <View style={styles.infoContainer}>
         <Text style={styles.name}>{userDetail.name}</Text>
-        {authUser && (
-          <TouchableOpacity
-            onPress={handleFavorite}
-            style={styles.favoriteIconButton}
-          >
-            <Icon
-              name={isFavorite(userId) ? 'heart' : 'heart-outline'}
-              size={28}
-              color={isFavorite(userId) ? '#e74c3c' : '#bbb'}
-            />
-          </TouchableOpacity>
-        )}
+        <FavoriteButton user={userDetail} style={styles.favoriteIconButton} />
       </View>
       <Text style={styles.username}>@{userDetail.username}</Text>
       <Text style={styles.email}>{userDetail.email}</Text>
-      <Text style={styles.section}>Dirección:</Text>
-      <Text>
-        {userDetail.address.street}, {userDetail.address.suite},{' '}
-        {userDetail.address.city}, {userDetail.address.zipcode}
-      </Text>
-      <Text style={styles.section}>Teléfono:</Text>
-      <Text>{userDetail.phone}</Text>
-      <Text style={styles.section}>Sitio web:</Text>
-      <Text>{userDetail.website}</Text>
-      <Text style={styles.section}>Compañía:</Text>
-      <Text>{userDetail.company.name}</Text>
-      <Text>{userDetail.company.catchPhrase}</Text>
+
     </View>
   );
 }

@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React from 'react';
 import {
   View,
   Text,
@@ -8,70 +8,46 @@ import {
   TouchableOpacity,
   TextInput,
   Animated,
-  Easing,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import UserSearchOverlay from '../components/UserSearchOverlay';
 import { useUserList } from '../../hooks/useUserList';
+import { useUserListLogic } from '../../hooks/useUserListLogic';
+import { UserListItem } from '../../components/UserListItem';
+
+const getAnimatedSearchBarStyle = (searchBarAnim: Animated.Value) => [
+  styles.searchContainer,
+  {
+    opacity: searchBarAnim,
+    transform: [
+      {
+        translateY: searchBarAnim.interpolate({
+          inputRange: [0, 1],
+          outputRange: [-76, 0], // Altura total barra
+        }),
+      },
+    ],
+    position: 'absolute' as 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    zIndex: 20,
+    elevation: 2,
+  },
+];
 
 export default function UserListScreen() {
   const { users, isLoading, isError, error, navigation } = useUserList();
-
-  const [query, setQuery] = useState('');
-  const [inputFocused, setInputFocused] = useState(false);
-  const inputRef = React.useRef<TextInput>(null);
-
-  // Animación barra de búsqueda
-  const searchBarAnim = useRef(new Animated.Value(1)).current; // 1: visible, 0: oculto
-  const lastOffset = useRef(0);
-  const [showSearchBar, setShowSearchBar] = useState(true);
-
-  const handleScroll = (event: any) => {
-    const offsetY = event.nativeEvent.contentOffset.y;
-    if (offsetY <= 0) {
-      // Siempre mostrar en el tope
-      if (!showSearchBar) setShowSearchBar(true);
-      Animated.timing(searchBarAnim, {
-        toValue: 1,
-        duration: 180,
-        useNativeDriver: true,
-        easing: Easing.out(Easing.ease),
-      }).start();
-      lastOffset.current = offsetY;
-      return;
-    }
-    if (offsetY > lastOffset.current + 8 && !inputFocused) {
-      // Scroll arriba: ocultar
-      if (showSearchBar) setShowSearchBar(false);
-      Animated.timing(searchBarAnim, {
-        toValue: 0,
-        duration: 180,
-        useNativeDriver: true,
-        easing: Easing.out(Easing.ease),
-      }).start();
-    } else if (offsetY < lastOffset.current - 8) {
-      // Scroll abajo: mostrar
-      if (!showSearchBar) setShowSearchBar(true);
-      Animated.timing(searchBarAnim, {
-        toValue: 1,
-        duration: 180,
-        useNativeDriver: true,
-        easing: Easing.out(Easing.ease),
-      }).start();
-    }
-    lastOffset.current = offsetY;
-  };
-
-  const filteredUsers = !query.trim()
-    ? users
-    : users.filter((u: any) => {
-        const q = query.toLowerCase();
-        return (
-          u.name.toLowerCase().includes(q) ||
-          u.username.toLowerCase().includes(q) ||
-          u.email.toLowerCase().includes(q)
-        );
-      });
+  const {
+    query,
+    setQuery,
+    inputFocused,
+    setInputFocused,
+    inputRef,
+    searchBarAnim,
+    handleScroll,
+    filteredUsers,
+  } = useUserListLogic(users);
 
   const handleSelectUser = (user: { id: number }) => {
     navigation.navigate('UserDetail', { userId: user.id });
@@ -106,28 +82,7 @@ export default function UserListScreen() {
   return (
     <View style={styles.mainContainer}>
       {/* Buscador animado absoluto */}
-      <Animated.View
-        style={[
-          styles.searchContainer,
-          {
-            opacity: searchBarAnim,
-            transform: [
-              {
-                translateY: searchBarAnim.interpolate({
-                  inputRange: [0, 1],
-                  outputRange: [-76, 0], // Altura total barra
-                }),
-              },
-            ],
-            position: 'absolute',
-            top: 0,
-            left: 0,
-            right: 0,
-            zIndex: 20,
-            elevation: 2,
-          },
-        ]}
-      >
+      <Animated.View style={getAnimatedSearchBarStyle(searchBarAnim)}>
         <TextInput
           ref={inputRef}
           style={styles.searchInput}
@@ -183,22 +138,15 @@ export default function UserListScreen() {
       {/* Lista de usuarios */}
       <FlatList
         contentContainerStyle={{ paddingTop: 86 }}
-        data={users}
+        data={filteredUsers}
         keyExtractor={item => item.id.toString()}
         renderItem={({ item }) => (
-          <TouchableOpacity
+          <UserListItem
+            user={item}
+            onPress={handleSelectUser}
             style={styles.itemContainer}
-            onPress={() =>
-              navigation.navigate('UserDetail', { userId: item.id })
-            }
-            activeOpacity={0.8}
-          >
-            <View>
-              <Text style={styles.name}>{item.name}</Text>
-              <Text style={styles.username}>@{item.username}</Text>
-              <Text style={styles.email}>{item.email}</Text>
-            </View>
-          </TouchableOpacity>
+            favoriteIconStyle={styles.favoriteIcon}
+          />
         )}
         onScroll={handleScroll}
         scrollEventThrottle={16}

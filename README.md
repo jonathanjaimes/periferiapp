@@ -46,14 +46,44 @@ Aplicación móvil desarrollada con **React Native**, orientada a la gestión y 
 
 ## Buenas prácticas y principios aplicados
 
-- **Clean Code**: Nombres descriptivos, funciones pequeñas y legibles.
-- **DRY (Don't Repeat Yourself)**: Reutilización de lógica mediante hooks y utilidades.
-- **KISS (Keep It Simple, Stupid)**: Soluciones simples y directas.
-- **Testing**: Pruebas unitarias para hooks, stores y lógica de almacenamiento.
-- **Formateo y linting**: Uso de ESLint y Prettier en todo el proyecto.
-- **Control de versiones**: `.gitignore` bien configurado para excluir archivos temporales y dependencias.
-- **Internacionalización**: Preparado para soportar múltiples idiomas si se requiere.
-- **Accesibilidad**: Uso de componentes accesibles y buenas prácticas de UI.
+- **Clean Code**: Uso de nombres descriptivos y consistentes para variables, funciones, interfaces y carpetas. Las funciones son pequeñas, legibles y cumplen una sola responsabilidad.
+
+- **DRY (Don't Repeat Yourself)**: Lógica reutilizable extraída en hooks personalizados (`/src/hooks`) y utilidades. Ejemplo: hooks para manejo de usuarios y favoritos.
+
+- **KISS (Keep It Simple, Stupid)**: Soluciones simples y directas, evitando complejidad innecesaria en la lógica y la estructura de componentes.
+
+- **Principios SOLID**:
+  - **S**: Cada clase, función o módulo tiene una única responsabilidad (ejemplo: `User.ts` solo define el modelo de usuario).
+  - **O**: El código es fácilmente extensible sin modificar lo existente, gracias al uso de interfaces y tipado fuerte (`IUserRepository`, `IFavoritesRepository`).
+  - **L**: Las implementaciones pueden ser intercambiadas sin romper la funcionalidad, usando interfaces y patrones de inyección de dependencias.
+  - **I**: Se crean interfaces específicas para cada caso de uso, evitando dependencias innecesarias.
+  - **D**: Las dependencias se abstraen mediante interfaces, facilitando pruebas y cambios futuros.
+
+- **Uso intensivo de TypeScript**: Tipado estricto en modelos, props y hooks. Se definen interfaces y tipos en `/src/domain/models` y `/src/domain/repositories`.
+
+- **Separación de capas**:
+  - **Presentación**: Pantallas y componentes UI en `/src/presentation`.
+  - **Dominio**: Modelos y contratos de negocio en `/src/domain`.
+  - **Datos**: Acceso a APIs y persistencia local en `/src/data`.
+
+- **Manejo centralizado de estado**: Zustand para stores globales, React Query para datos remotos y caché, y AsyncStorage para persistencia local.
+
+- **Manejo de errores**: Validaciones y mensajes claros en formularios y respuestas de API. Se capturan y muestran errores amigables al usuario.
+
+- **Pruebas unitarias y de integración**: Uso de Jest y Testing Library para asegurar la calidad de hooks, stores y lógica de almacenamiento.
+
+- **Formateo y linting automáticos**: Configuración de ESLint y Prettier para mantener el código limpio y consistente en todo el proyecto.
+
+- **Convenciones de nombres y organización**: 
+  - Archivos y carpetas en inglés y con nombres descriptivos.
+  - Imports organizados por bloques (librerías externas, módulos internos, estilos, etc.).
+  - Componentes y hooks nombrados con prefijo `use` cuando corresponde.
+
+- **Control de versiones**: `.gitignore` bien configurado para excluir archivos temporales, dependencias y archivos sensibles.
+
+- **Accesibilidad y usabilidad**: Uso de componentes accesibles y buenas prácticas de UI para mejorar la experiencia de usuario.
+
+- **Escalabilidad y mantenibilidad**: Estructura modular, separación por dominios y uso de interfaces para facilitar el crecimiento del proyecto y la incorporación de nuevas funcionalidades.
 
 ---
 

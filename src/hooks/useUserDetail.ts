@@ -1,7 +1,6 @@
 import { useRoute } from '@react-navigation/native';
 import { useUserDetailQuery } from '../data/api';
-import { useFavoritesStore } from '../store/favoritesStore';
-import { useAuthStore } from '../store/authStore';
+import { useFavoriteActions } from './useFavoriteActions';
 import type { User } from '../domain/models/User';
 
 export function useUserDetail(): {
@@ -9,9 +8,8 @@ export function useUserDetail(): {
   isLoading: boolean;
   isError: boolean;
   error: Error | null;
-  addFavorite: (username: string, user: User) => Promise<void>;
-  removeFavorite: (username: string, userId: number) => Promise<void>;
-  isFavorite: (userId: number) => boolean;
+  isFavorite: boolean;
+  handleFavorite: () => Promise<void>;
   user: string | null;
   userId: number;
 } {
@@ -20,19 +18,20 @@ export function useUserDetail(): {
   const { userId } = route.params as { userId: number };
   const { data, isLoading, isError, error } = useUserDetailQuery(userId);
 
-  const user = useAuthStore(state => state.user);
-  const addFavorite = useFavoritesStore(state => state.addFavorite);
-  const removeFavorite = useFavoritesStore(state => state.removeFavorite);
-  const isFavorite = useFavoritesStore(state => state.isFavorite);
+  const { isFavorite: isFavoriteRaw, handleFavorite: handleFavoriteRaw, authUser: user } = useFavoriteActions();
+
+  const isFavorite = data ? isFavoriteRaw(data.id) : false;
+  const handleFavorite = async () => {
+    if (data) await handleFavoriteRaw(data);
+  };
 
   return {
     userDetail: data,
     isLoading,
     isError,
     error: error ?? null,
-    addFavorite,
-    removeFavorite,
     isFavorite,
+    handleFavorite,
     user,
     userId,
   };
