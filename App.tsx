@@ -5,7 +5,6 @@
  * @format
  */
 
-import { NewAppScreen } from '@react-native/new-app-screen';
 import { StatusBar, StyleSheet, useColorScheme, View } from 'react-native';
 
 import { enableScreens } from 'react-native-screens';
@@ -15,9 +14,23 @@ import React from 'react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import AppNavigator from './src/presentation/navigation/AppNavigator';
 
+import PushNotification from 'react-native-push-notification';
+
 function App() {
   const isDarkMode = useColorScheme() === 'dark';
   const queryClient = React.useRef(new QueryClient()).current;
+
+  React.useEffect(() => {
+    PushNotification.createChannel(
+      {
+        channelId: 'geofence-channel',
+        channelName: 'Geofence Notifications',
+        importance: 4,
+        vibrate: true,
+      },
+      (created: boolean) => console.log(`createChannel returned '${created}'`),
+    );
+  }, []);
 
   return (
     <QueryClientProvider client={queryClient}>
