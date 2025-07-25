@@ -3,9 +3,12 @@ import { View, Text, StyleSheet } from 'react-native';
 import CustomButton from '../components/CustomButton';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { useProfile } from '../../hooks/useProfile';
+import { useProfileScreenLogic } from './useProfileScreenLogic';
 
 export default function ProfileScreen() {
   const { user, logout } = useProfile();
+
+  useProfileScreenLogic({ tabName: 'Feed' });
 
   if (!user) {
     const LoginScreen = require('./LoginScreen').default;
