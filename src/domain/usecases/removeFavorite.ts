@@ -1,10 +1,6 @@
-import { saveFavorites, getFavorites } from '../../data/storage/favorites';
-import { User } from '../models/User';
+import { favoritesRepository } from '../../data/repositories/favoritesRepository';
+import { Geofence } from '../models/Geofence';
 
-export async function removeFavorite(username: string, userId: number) {
-  const currentFavorites = await getFavorites(username);
-  const updatedFavorites = currentFavorites.filter((fav: User) => fav.id !== userId);
-  await saveFavorites(username, updatedFavorites);
-  return updatedFavorites;
+export async function removeFavorite(username: string, geofence: Geofence) {
+  return await favoritesRepository.removeFavorite(username, geofence);
 }
-

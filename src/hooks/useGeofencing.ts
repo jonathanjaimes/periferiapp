@@ -1,9 +1,7 @@
 import { useEffect, useState, useRef, useCallback } from "react";
 import Geolocation from '@react-native-community/geolocation';
 import { Geofence } from "../domain/models/Geofence";
-import { saveGeofence } from "../domain/usecases";
-import { isWithinGeofence } from "../domain/usecases";
-import { triggerGeofenceNotification } from "../domain/usecases";
+import { saveGeofence, isWithinGeofence, triggerGeofenceNotification } from "../domain/usecases";
 import { Location } from "../domain/models/Location";
 import { requestLocationPermission } from "../utils/geo";
 import { useGeofenceStore } from "../store/geofenceStore";
@@ -84,7 +82,7 @@ export const useGeofencing = () => {
 
     const updateGeofence = useCallback(
         async (newGeofence: Geofence) => {
-            await saveGeofence(newGeofence)
+            await saveGeofence('admin', newGeofence)
             addGeofence(newGeofence)
             hasNotified.current = false
         },

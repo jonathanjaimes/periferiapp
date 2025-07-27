@@ -15,37 +15,41 @@ export function useGeofenceDetail(): {
 } {
   const route = useRoute();
   // Se asume que la ruta tiene un parámetro userId
-  const { geofenceId } = route.params as { geofenceId: number };
+  const { geofenceId } = route.params as { geofenceId: string };
 
-      const [geofence, setGeofence] = useState<Geofence>();
-      const [isLoading, setIsLoading] = useState(false);
-      const [isError, setIsError] = useState(false);
+  const [geofence, setGeofence] = useState<Geofence>();
+  const [isLoading, setIsLoading] = useState(false);
+  const [isError, setIsError] = useState(false);
 
-      const geofences = useGeofenceStore(state => state.geofences);
-  
-      useEffect(() => {
-          (async () => {
-              try {
-                  setIsLoading(true);
+  const geofences = useGeofenceStore(state => state.geofences);
 
-                  const geofenceFromStore = geofences.find(g => g.id === geofenceId);
+  useEffect(() => {
+    (async () => {
+      try {
+        setIsLoading(true);
 
-                  if (geofenceFromStore) {
-                      setGeofence(geofenceFromStore);
-                  }else {
-                    const geofenceList = await getGeofences();
-                    const geofence = geofenceList.find(g => g.id === geofenceId);
-                    setGeofence(geofence);
-                  }
-              } catch (error) {
-                  setIsError(true);
-              } finally {
-                  setIsLoading(false);
-              }
-          })();
-      }, []);
+        const geofenceFromStore = geofences.find(g => g.id === geofenceId);
 
-  const { isFavorite: isFavoriteRaw, handleFavorite: handleFavoriteRaw, authUser: user } = useFavoriteActions();
+        if (geofenceFromStore) {
+          setGeofence(geofenceFromStore);
+        } else {
+          const geofenceList = await getGeofences();
+          const geofence = geofenceList.find(g => g.id === geofenceId);
+          setGeofence(geofence);
+        }
+      } catch (error) {
+        setIsError(true);
+      } finally {
+        setIsLoading(false);
+      }
+    })();
+  }, []);
+
+  const {
+    isFavorite: isFavoriteRaw,
+    handleFavorite: handleFavoriteRaw,
+    authUser: user,
+  } = useFavoriteActions();
 
   const isFavorite = geofence ? isFavoriteRaw(geofence.id) : false;
   const handleFavorite = async () => {
@@ -58,6 +62,6 @@ export function useGeofenceDetail(): {
     isError,
     isFavorite,
     handleFavorite,
-    user
+    user,
   };
 }

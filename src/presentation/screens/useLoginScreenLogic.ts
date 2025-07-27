@@ -7,14 +7,14 @@ export function useLoginScreenLogic() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const { login, loading, error } = useLogin();
-  const setError = useAuthStore((state) => state.setError);
+  const setError = useAuthStore(state => state.setError);
 
   useFocusEffect(
     useCallback(() => {
       setUsername('');
       setPassword('');
       setError(null);
-    }, [setError])
+    }, [setError]),
   );
 
   const onSubmit = async () => {

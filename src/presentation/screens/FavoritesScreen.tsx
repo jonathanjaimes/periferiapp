@@ -9,7 +9,7 @@ import {
 } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import type { FeedStackParamList } from '../navigation/AppNavigator';
+import type { FeedStackParamList } from '../navigation/navigationTypes';
 import { useFavorites } from '../../hooks/useFavorites';
 
 export default function FavoritesScreen() {

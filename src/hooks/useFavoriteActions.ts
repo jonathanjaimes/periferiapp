@@ -8,12 +8,13 @@ export function useFavoriteActions() {
   const addFavorite = useFavoritesStore(state => state.addFavorite);
   const removeFavorite = useFavoritesStore(state => state.removeFavorite);
 
-  const isFavorite = (geofenceId: number) => favorites.some(g => g.id === geofenceId);
+  const isFavorite = (geofenceId: string) =>
+    favorites.some(g => g.id === geofenceId);
 
   const handleFavorite = async (geofenceObj: Geofence) => {
     if (!authUser) return;
     if (isFavorite(geofenceObj.id)) {
-      await removeFavorite(authUser, geofenceObj.id);
+      await removeFavorite(authUser, geofenceObj);
     } else {
       await addFavorite(authUser, geofenceObj);
     }

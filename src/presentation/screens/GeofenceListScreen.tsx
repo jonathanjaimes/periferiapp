@@ -50,7 +50,7 @@ export default function GeofenceListScreen() {
     filteredGeofences,
   } = useGeofenceListLogic(geofences);
 
-  const handleSelectGeofence = (geofence: { id: number }) => {
+  const handleSelectGeofence = (geofence: { id: string }) => {
     navigation.navigate('GeofenceDetail', { geofenceId: geofence.id });
     setTimeout(() => {
       setInputFocused(false);
@@ -195,11 +195,6 @@ const styles = StyleSheet.create({
   },
   list: {
     padding: 16,
-  },
-  favoriteIcon: {
-    // position: 'absolute',
-    // right: 10,
-    // top: 10,
   },
   iconMarginLeft: {
     marginLeft: 8,

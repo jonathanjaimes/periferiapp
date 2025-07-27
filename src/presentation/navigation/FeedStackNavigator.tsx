@@ -1,7 +1,7 @@
 import React from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { GeofenceListScreen, GeofenceDetailScreen } from '../screens';
-import { FeedStackParamList } from './AppNavigator';
+import { FeedStackParamList } from './navigationTypes';
 
 const Stack = createNativeStackNavigator<FeedStackParamList>();
 

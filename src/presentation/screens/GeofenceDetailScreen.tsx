@@ -48,13 +48,6 @@ export default function GeofenceDetailScreen() {
           }}
         />
       </View>
-      {/* <View style={styles.infoContainer}>
-        <Text style={styles.name}>{geofenceDetail.name}</Text>
-        <FavoriteButton
-          geofence={geofenceDetail}
-          style={styles.favoriteIconButton}
-        />
-      </View> */}
       <Text style={styles.name}>Nombre: {geofenceDetail.name}</Text>
       <Text style={styles.latitude}>Latitud: {geofenceDetail.latitude}</Text>
       <Text style={styles.longitude}>Longitud: {geofenceDetail.longitude}</Text>

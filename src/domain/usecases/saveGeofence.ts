@@ -1,6 +1,6 @@
-import { Geofence } from '../models/Geofence'
-import { saveGeofenceToStorage } from '../../data/storage'
+import { Geofence } from '../models/Geofence';
+import { geofencesRepository } from '../../data/repositories/geofencesRepository';
 
-export const saveGeofence = async (geofence: Geofence) => {
-    return await saveGeofenceToStorage(geofence);
-}
+export const saveGeofence = async (username: string, geofence: Geofence) => {
+  return await geofencesRepository.addGeofence(username, geofence);
+};

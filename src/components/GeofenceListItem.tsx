@@ -32,7 +32,7 @@ export const GeofenceListItem: React.FC<GeofenceListItemProps> = ({
           {geofence.name}
         </Text>
         <Text style={{ color: '#555' }}>Latitud: {geofence.latitude}</Text>
-        <Text style={{ color: '#888' }}>Longitud: {geofence.longitude}</Text>
+        <Text style={{ color: '#555' }}>Longitud: {geofence.longitude}</Text>
       </View>
       <FavoriteButton geofence={geofence} style={favoriteIconStyle} />
     </TouchableOpacity>

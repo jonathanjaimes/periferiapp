@@ -5,11 +5,8 @@ import {
   TouchableOpacity,
   Text,
   StyleSheet,
-  Dimensions,
 } from 'react-native';
 import { Geofence } from '../../domain/models/Geofence';
-
-const { height } = Dimensions.get('window');
 
 interface UserSearchOverlayProps {
   results: Geofence[];
@@ -74,14 +71,7 @@ const styles = StyleSheet.create({
   name: {
     fontWeight: 'bold',
     fontSize: 16,
-    color: '#cd3422',
-  },
-  username: {
-    color: '#888',
-    marginBottom: 2,
-  },
-  email: {
-    color: '#cd3422',
+    color: '#000',
   },
   noResultsContainer: {
     flex: 1,

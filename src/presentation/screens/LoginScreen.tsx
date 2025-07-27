@@ -93,10 +93,10 @@ const styles = StyleSheet.create({
     padding: 12,
     marginBottom: 12,
     fontSize: 16,
-    // fontFamily: undefined, // No personalizar fuente para evitar errores visuales en secureTextEntry
   },
   error: {
     color: 'red',
     marginBottom: 8,
+    textAlign: 'center',
   },
 });

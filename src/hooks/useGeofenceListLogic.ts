@@ -49,9 +49,7 @@ export function useGeofenceListLogic(geofences: Geofence[]) {
     ? geofences
     : geofences.filter((g: Geofence) => {
         const q = query.toLowerCase();
-        return (
-          g.name.toLowerCase().includes(q)
-        );
+        return g.name.toLowerCase().includes(q);
       });
 
   return {

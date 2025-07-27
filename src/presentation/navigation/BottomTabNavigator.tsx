@@ -5,13 +5,38 @@ import FavoritesStackNavigator from './FavoritesStackNavigator';
 import { ProfileScreen, GeofenceScreen } from '../screens';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { useNavigation } from '@react-navigation/native';
-import { RootTabParamList } from './AppNavigator';
+import { RootTabParamList } from './navigationTypes';
 import { BottomTabNavigationProp } from '@react-navigation/bottom-tabs';
+import { RootStackParamList } from './navigationTypes';
 
 const Tab = createBottomTabNavigator<RootTabParamList>();
 
+function handleTabPress(
+  e: any,
+  navigation: any,
+  tabKey: string,
+  stackScreen: string,
+) {
+  const state = navigation.getState();
+  const bottomTabRoute = state?.routes.find(
+    (route: any) => (route.name = 'BottomTab'),
+  );
+
+  const tabState = bottomTabRoute?.state;
+  const tabName = tabState?.routes.find((route: any) => route.name === tabKey);
+
+  if (tabName?.state?.index !== undefined && tabName?.state.index > 0) {
+    e.preventDefault();
+    navigation.navigate('BottomTab', {
+      screen: tabKey,
+      params: { screen: stackScreen },
+    });
+  }
+}
+
 export default function BottomTabNavigator() {
-  const navigation = useNavigation<BottomTabNavigationProp<RootTabParamList>>();
+  const navigation =
+    useNavigation<BottomTabNavigationProp<RootStackParamList>>();
   return (
     <Tab.Navigator
       screenOptions={({ route }) => ({
@@ -42,42 +67,15 @@ export default function BottomTabNavigator() {
         name="Feed"
         component={FeedStackNavigator}
         listeners={{
-          tabPress: e => {
-            const state = navigation.getState();
-            const tabState = state?.routes.find(
-              route => route.name === 'Feed',
-            )?.state;
-            if (
-              tabState &&
-              tabState?.index !== undefined &&
-              tabState?.index > 0
-            ) {
-              e.preventDefault();
-              navigation.navigate('Feed', { screen: 'GeofenceList' });
-            }
-          },
+          tabPress: e => handleTabPress(e, navigation, 'Feed', 'GeofenceList'),
         }}
       />
       <Tab.Screen
         name="Favorites"
         component={FavoritesStackNavigator}
         listeners={{
-          tabPress: e => {
-            {
-              const state = navigation.getState();
-              const tabState = state?.routes.find(
-                route => route.name === 'Favorites',
-              )?.state;
-              if (
-                tabState &&
-                tabState?.index !== undefined &&
-                tabState?.index > 0
-              ) {
-                e.preventDefault();
-                navigation.navigate('Favorites', { screen: 'FavoritesScreen' });
-              }
-            }
-          },
+          tabPress: e =>
+            handleTabPress(e, navigation, 'Favorites', 'FavoritesScreen'),
         }}
       />
       <Tab.Screen name="Location" component={GeofenceScreen} />

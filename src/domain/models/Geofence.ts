@@ -1,7 +1,7 @@
-import { Location } from "./Location";
+import { Location } from './Location';
 
 export interface Geofence extends Location {
-    radius: number
-    name: string
-    id: number
+  radius: number;
+  name: string;
+  id: string;
 }

@@ -7,12 +7,10 @@ import { useGeofenceForm } from '../../hooks/useGeofenceForm';
 
 export default function ModalGeofenceForm({
   onClose,
-  geofence,
   updateGeofence,
   currentLocation,
 }: {
   onClose: () => void;
-  geofence: Geofence;
   updateGeofence: (geofence: Geofence) => void;
   currentLocation: Location | null;
 }) {
@@ -26,7 +24,6 @@ export default function ModalGeofenceForm({
     name,
     setName,
     id,
-    setId,
     useCurrentLocation,
     setUseCurrentLocation,
     reset,
@@ -58,6 +55,8 @@ export default function ModalGeofenceForm({
             <Switch
               value={useCurrentLocation}
               onValueChange={setUseCurrentLocation}
+              trackColor={{ false: '#ccc', true: '#52c934' }}
+              thumbColor={'#fff'}
             />
           </View>
           <TextInput
@@ -75,23 +74,7 @@ export default function ModalGeofenceForm({
             value={name}
             onChangeText={setName}
           />
-          <TextInput
-            style={styles.input}
-            placeholderTextColor="#888"
-            placeholder="Id"
-            value={id}
-            onChangeText={setId}
-          />
         </View>
-
-        {geofence && (
-          <Text style={styles.geofenceInfo}>
-            Geocerca actual:
-            <Text>Latitud: {geofence.latitude}</Text>
-            <Text>Longitud: {geofence.longitude}</Text>
-            <Text>Radio: {geofence.radius}</Text>
-          </Text>
-        )}
 
         <View style={styles.buttonRow}>
           <CustomButton
@@ -113,7 +96,7 @@ export default function ModalGeofenceForm({
                 longitude: Number(longitude),
                 radius: Number(radius),
                 name: name,
-                id: Number(id),
+                id: id,
               });
               onClose();
             }}

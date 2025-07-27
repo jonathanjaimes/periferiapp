@@ -35,15 +35,6 @@ export default function GeofenceScreen() {
       {visible && (
         <ModalGeofenceForm
           onClose={closeModal}
-          geofence={
-            geofence || {
-              latitude: 0,
-              longitude: 0,
-              radius: 0,
-              name: '',
-              id: 0,
-            }
-          }
           updateGeofence={updateGeofence}
           currentLocation={currentLocation}
         />
@@ -74,24 +65,32 @@ export default function GeofenceScreen() {
             <Text>Obteniendo ubicación...</Text>
           </View>
         )}
-        <View style={styles.panel}>
-          <Text
-            style={[
-              styles.statusText,
-              { color: isInside ? '#1db83c' : '#cd3422' },
-            ]}
-          >
-            {isInside ? '¡Estás dentro de la zona!' : 'Estás fuera de la zona.'}
-          </Text>
-          {geofence && (
+        {geofence ? (
+          <View style={styles.panel}>
+            <Text
+              style={[
+                styles.statusText,
+                { color: isInside ? '#1db83c' : '#cd3422' },
+              ]}
+            >
+              {isInside
+                ? '¡Estás dentro de la zona!'
+                : 'Estás fuera de la zona.'}
+            </Text>
             <Text style={styles.geofenceInfo}>
               Zona: {'\n'}
               lat {geofence.latitude} {'\n'}
               lon {geofence.longitude} {'\n'}
               radio {geofence.radius}m
             </Text>
-          )}
-        </View>
+          </View>
+        ) : (
+          <View style={styles.panel}>
+            <Text style={styles.emptyText}>
+              No se ha configurado una geocerca
+            </Text>
+          </View>
+        )}
       </View>
     </View>
   );
@@ -118,12 +117,16 @@ const styles = StyleSheet.create({
     marginTop: 16,
     flex: 1,
     padding: 16,
+    justifyContent: 'center',
     backgroundColor: 'white',
   },
   statusText: {
-    marginTop: 16,
     fontSize: 16,
     fontWeight: 'bold',
+  },
+  emptyText: {
+    color: '#888',
+    textAlign: 'center',
   },
   geofenceInfo: {
     marginTop: 8,

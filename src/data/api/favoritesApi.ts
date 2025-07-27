@@ -1,24 +1,26 @@
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import { User } from '../../domain/models/User';
+import { getFavorites, saveFavorites } from '../storage/favorites';
+import { Geofence } from '../../domain/models/Geofence';
 
-const FAVORITES_KEY_PREFIX = 'favorites_';
-
-export async function getFavoritesForUser(username: string): Promise<User[]> {
+export async function getFavoritesForUserApi(
+  username: string,
+): Promise<Geofence[]> {
   try {
-    const data = await AsyncStorage.getItem(FAVORITES_KEY_PREFIX + username);
-    return data ? JSON.parse(data) : [];
+    return await getFavorites(username);
   } catch (error) {
     console.error('Error al obtener favoritos:', error);
     return [];
   }
 }
 
-export async function addFavoriteUseCase(username: string, user: User): Promise<User[]> {
+export async function addFavoriteApi(
+  username: string,
+  geofence: Geofence,
+): Promise<Geofence[]> {
   try {
-    const current = await getFavoritesForUser(username);
-    if (!current.find(u => u.username === user.username)) {
-      const updated = [...current, user];
-      await AsyncStorage.setItem(FAVORITES_KEY_PREFIX + username, JSON.stringify(updated));
+    const current = await getFavorites(username);
+    if (!current.find(g => g.id === geofence.id)) {
+      const updated = [...current, geofence];
+      await saveFavorites(username, updated);
       return updated;
     }
     return current;
@@ -28,11 +30,14 @@ export async function addFavoriteUseCase(username: string, user: User): Promise<
   }
 }
 
-export async function removeFavoriteUseCase(username: string, user: User): Promise<User[]> {
+export async function removeFavoriteApi(
+  username: string,
+  geofence: Geofence,
+): Promise<Geofence[]> {
   try {
-    const current = await getFavoritesForUser(username);
-    const updated = current.filter(u => u.username !== user.username);
-    await AsyncStorage.setItem(FAVORITES_KEY_PREFIX + username, JSON.stringify(updated));
+    const current = await getFavorites(username);
+    const updated = current.filter(g => g.id !== geofence.id);
+    await saveFavorites(username, updated);
     return updated;
   } catch (error) {
     console.error('Error al eliminar favorito:', error);

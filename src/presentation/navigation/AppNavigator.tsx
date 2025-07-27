@@ -1,28 +1,32 @@
 import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { BottomTabNavigator } from './index';
-import { NavigatorScreenParams } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import LoginScreen from '../screens/LoginScreen';
+import { useAuthStore } from '../../store/authStore';
 
-export type FeedStackParamList = {
-  GeofenceList: undefined;
-  GeofenceDetail: { geofenceId: number };
-};
-
-export type FavoritesStackParamList = {
-  FavoritesScreen: undefined;
-};
-
-export type RootTabParamList = {
-  Feed: NavigatorScreenParams<FeedStackParamList>;
-  Favorites: NavigatorScreenParams<FavoritesStackParamList>;
-  Profile: undefined;
-  Location: undefined;
-};
+const RootStack = createNativeStackNavigator();
 
 export default function AppNavigator() {
+  const user = useAuthStore(state => state.user);
+
   return (
     <NavigationContainer>
-      <BottomTabNavigator />
+      <RootStack.Navigator>
+        {user ? (
+          <RootStack.Screen
+            name="BottomTab"
+            component={BottomTabNavigator}
+            options={{ headerShown: false }}
+          />
+        ) : (
+          <RootStack.Screen
+            name="Login"
+            component={LoginScreen}
+            options={{ headerShown: false }}
+          />
+        )}
+      </RootStack.Navigator>
     </NavigationContainer>
   );
 }

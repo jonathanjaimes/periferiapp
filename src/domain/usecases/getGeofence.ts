@@ -1,7 +1,6 @@
-import { Geofence } from "../models/Geofence";
-import { getGeofencesFromStorage } from '../../data/storage/geofence'
+import { Geofence } from '../models/Geofence';
+import { geofencesRepository } from '../../data/repositories/geofencesRepository';
 
 export const getGeofences = async (): Promise<Geofence[]> => {
-    return await getGeofencesFromStorage();
-}
-    
+  return await geofencesRepository.getGeofences('admin');
+};

@@ -1,15 +1,19 @@
 import { IFavoritesRepository } from '../../domain/repositories';
 
-import { getFavoritesForUser, addFavoriteUseCase, removeFavoriteUseCase } from '../api/favoritesApi';
+import {
+  getFavoritesForUserApi,
+  addFavoriteApi,
+  removeFavoriteApi,
+} from '../api/favoritesApi';
 
 export const favoritesRepository: IFavoritesRepository = {
   async getFavorites(username) {
-    return getFavoritesForUser(username);
+    return getFavoritesForUserApi(username);
   },
-  async addFavorite(username, user) {
-    return addFavoriteUseCase(username, user);
+  async addFavorite(username, geofence) {
+    return addFavoriteApi(username, geofence);
   },
-  async removeFavorite(username, userId) {
-    return removeFavoriteUseCase(username, userId);
+  async removeFavorite(username, geofence) {
+    return removeFavoriteApi(username, geofence);
   },
 };

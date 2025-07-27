@@ -1,7 +1,7 @@
-import { User } from '../models/User';
+import { Geofence } from '../models/Geofence';
 
 export interface IFavoritesRepository {
-  getFavorites(username: string): Promise<User[]>;
-  addFavorite(username: string, user: User): Promise<User[]>;
-  removeFavorite(username: string, userId: number): Promise<User[]>;
+  getFavorites(username: string): Promise<Geofence[]>;
+  addFavorite(username: string, geofence: Geofence): Promise<Geofence[]>;
+  removeFavorite(username: string, geofence: Geofence): Promise<Geofence[]>;
 }
