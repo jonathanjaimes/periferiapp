@@ -11,9 +11,9 @@ import {
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import UserSearchOverlay from '../components/UserSearchOverlay';
-import { useUserList } from '../../hooks/useUserList';
-import { useUserListLogic } from '../../hooks/useUserListLogic';
-import { UserListItem } from '../../components/UserListItem';
+import { GeofenceListItem } from '../../components/GeofenceListItem';
+import { useGeofenceList } from '../../hooks/useGeofenceList';
+import { useGeofenceListLogic } from '../../hooks/useGeofenceListLogic';
 
 const getAnimatedSearchBarStyle = (searchBarAnim: Animated.Value) => [
   styles.searchContainer,
@@ -36,8 +36,9 @@ const getAnimatedSearchBarStyle = (searchBarAnim: Animated.Value) => [
   },
 ];
 
-export default function UserListScreen() {
-  const { users, isLoading, isError, error, navigation } = useUserList();
+export default function GeofenceListScreen() {
+  const { geofences, isLoading, isError, navigation } = useGeofenceList();
+
   const {
     query,
     setQuery,
@@ -46,11 +47,11 @@ export default function UserListScreen() {
     inputRef,
     searchBarAnim,
     handleScroll,
-    filteredUsers,
-  } = useUserListLogic(users);
+    filteredGeofences,
+  } = useGeofenceListLogic(geofences);
 
-  const handleSelectUser = (user: { id: number }) => {
-    navigation.navigate('UserDetail', { userId: user.id });
+  const handleSelectGeofence = (geofence: { id: number }) => {
+    navigation.navigate('GeofenceDetail', { geofenceId: geofence.id });
     setTimeout(() => {
       setInputFocused(false);
       setQuery('');
@@ -63,17 +64,15 @@ export default function UserListScreen() {
     return (
       <View style={styles.centered}>
         <ActivityIndicator size="large" color="#007AFF" />
-        <Text>Cargando usuarios...</Text>
+        <Text>Cargando posiciones...</Text>
       </View>
     );
   }
 
-  if (isError && error) {
+  if (isError) {
     return (
       <View style={styles.centered}>
-        <Text style={styles.errorText}>
-          Error: {error instanceof Error ? error.message : String(error)}
-        </Text>
+        <Text style={styles.errorText}>Error al cargar posiciones</Text>
       </View>
     );
   }
@@ -86,7 +85,7 @@ export default function UserListScreen() {
         <TextInput
           ref={inputRef}
           style={styles.searchInput}
-          placeholder="Buscar usuario..."
+          placeholder="Buscar posición..."
           placeholderTextColor="#888"
           value={query}
           onChangeText={text => setQuery(text)}
@@ -128,28 +127,32 @@ export default function UserListScreen() {
       {/* Overlay de sugerencias */}
       {inputFocused && query.trim().length > 0 && (
         <UserSearchOverlay
-          results={filteredUsers}
-          onSelect={handleSelectUser}
+          results={filteredGeofences}
+          onSelect={handleSelectGeofence}
           onClose={() => setInputFocused(false)}
           query={query}
         />
       )}
 
-      {/* Lista de usuarios */}
+      {/* Lista de posiciones */}
       <FlatList
         contentContainerStyle={{ paddingTop: 86 }}
-        data={filteredUsers}
+        data={geofences}
         keyExtractor={item => item.id.toString()}
         renderItem={({ item }) => (
-          <UserListItem
-            user={item}
-            onPress={handleSelectUser}
+          <GeofenceListItem
+            geofence={item}
+            onPress={handleSelectGeofence}
             style={styles.itemContainer}
-            favoriteIconStyle={styles.favoriteIcon}
           />
         )}
         onScroll={handleScroll}
         scrollEventThrottle={16}
+        ListEmptyComponent={
+          <Text style={styles.emptyListText}>
+            No has agregado la primera geocerca
+          </Text>
+        }
       />
     </View>
   );
@@ -161,6 +164,11 @@ const styles = StyleSheet.create({
   },
   errorText: {
     color: 'red',
+  },
+  emptyListText: {
+    color: '#888',
+    textAlign: 'center',
+    marginTop: 20,
   },
   searchContainer: {
     flexDirection: 'row',
@@ -189,9 +197,9 @@ const styles = StyleSheet.create({
     padding: 16,
   },
   favoriteIcon: {
-    position: 'absolute',
-    right: 10,
-    top: 10,
+    // position: 'absolute',
+    // right: 10,
+    // top: 10,
   },
   iconMarginLeft: {
     marginLeft: 8,
@@ -206,21 +214,5 @@ const styles = StyleSheet.create({
     paddingHorizontal: 36,
     marginBottom: 12,
     marginHorizontal: 16,
-    shadowColor: '#000',
-    shadowOpacity: 0.05,
-    shadowRadius: 4,
-  },
-  name: {
-    fontWeight: 'bold',
-    fontSize: 16,
-    color: '#cd3422',
-    marginBottom: 2,
-  },
-  username: {
-    color: '#888',
-    marginBottom: 2,
-  },
-  email: {
-    color: '#cd3422',
   },
 });

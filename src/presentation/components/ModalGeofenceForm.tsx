@@ -3,6 +3,7 @@ import { View, Text, TextInput, Switch, StyleSheet } from 'react-native';
 import { Geofence } from '../../domain/models/Geofence';
 import { Location } from '../../domain/models/Location';
 import CustomButton from '../components/CustomButton';
+import { useGeofenceForm } from '../../hooks/useGeofenceForm';
 
 export default function ModalGeofenceForm({
   onClose,
@@ -15,19 +16,21 @@ export default function ModalGeofenceForm({
   updateGeofence: (geofence: Geofence) => void;
   currentLocation: Location | null;
 }) {
-  const [latitude, setLatitude] = React.useState<string>('');
-  const [longitude, setLongitude] = React.useState<string>('');
-  const [radius, setRadius] = React.useState<string>('');
-  const [useCurrentLocation, setUseCurrentLocation] =
-    React.useState<boolean>(false);
-
-  React.useEffect(() => {
-    console.log('currentLocationnnnn', currentLocation);
-    if (useCurrentLocation && currentLocation) {
-      setLatitude(currentLocation?.latitude.toString() || '00');
-      setLongitude(currentLocation?.longitude.toString() || '00');
-    }
-  }, [useCurrentLocation, currentLocation]);
+  const {
+    latitude,
+    setLatitude,
+    longitude,
+    setLongitude,
+    radius,
+    setRadius,
+    name,
+    setName,
+    id,
+    setId,
+    useCurrentLocation,
+    setUseCurrentLocation,
+    reset,
+  } = useGeofenceForm(currentLocation);
 
   return (
     <View style={styles.modalOverlay}>
@@ -65,6 +68,20 @@ export default function ModalGeofenceForm({
             value={radius}
             onChangeText={setRadius}
           />
+          <TextInput
+            style={styles.input}
+            placeholderTextColor="#888"
+            placeholder="Nombre"
+            value={name}
+            onChangeText={setName}
+          />
+          <TextInput
+            style={styles.input}
+            placeholderTextColor="#888"
+            placeholder="Id"
+            value={id}
+            onChangeText={setId}
+          />
         </View>
 
         {geofence && (
@@ -82,9 +99,7 @@ export default function ModalGeofenceForm({
             textStyle={styles.cancelText}
             style={styles.cancelButton}
             onPress={() => {
-              setLatitude('');
-              setLongitude('');
-              setRadius('');
+              reset();
               onClose();
             }}
           />
@@ -97,6 +112,8 @@ export default function ModalGeofenceForm({
                 latitude: Number(latitude),
                 longitude: Number(longitude),
                 radius: Number(radius),
+                name: name,
+                id: Number(id),
               });
               onClose();
             }}

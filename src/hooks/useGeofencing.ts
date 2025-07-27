@@ -1,35 +1,30 @@
 import { useEffect, useState, useRef, useCallback } from "react";
 import Geolocation from '@react-native-community/geolocation';
 import { Geofence } from "../domain/models/Geofence";
-import { getGeofence } from "../domain/usecases/getGeofence";
-import { saveGeofence } from "../domain/usecases/saveGeofence";
-import { isWithinGeofence } from "../domain/usecases/isWithinGeofence";
-import { triggerGeofenceNotification } from "../domain/usecases/triggerGeofenceNotification";
+import { saveGeofence } from "../domain/usecases";
+import { isWithinGeofence } from "../domain/usecases";
+import { triggerGeofenceNotification } from "../domain/usecases";
 import { Location } from "../domain/models/Location";
 import { requestLocationPermission } from "../utils/geo";
+import { useGeofenceStore } from "../store/geofenceStore";
 
 export const useGeofencing = () => {
     const [currentLocation, setCurrentLocation] = useState<Location | null>(null);
-    const [geofence, setGeofence] = useState<Geofence | null>(null);
     const [isInside, setIsInside] = useState<boolean>(false);
     const [hasPermission, setHasPermission] = useState<boolean>(false);
     const hasNotified = useRef<boolean>(false);
     const hasNotifiedExit = useRef<boolean>(false);
 
-    useEffect(() => {
-        (async () => {
-            const hasPermission = await requestLocationPermission()
-            console.log('hasPermissionnn', hasPermission)
-            if (hasPermission){
-                setHasPermission(true)
-            }
-        })()
-    }, [])
+    const addGeofence = useGeofenceStore(state => state.addGeofence);
+    const geofences = useGeofenceStore(state => state.geofences);
+    const geofence = geofences[geofences.length - 1]
 
     useEffect(() => {
         (async () => {
-            const storeGeofence = await getGeofence();
-            if (storeGeofence) setGeofence(storeGeofence)
+            const hasPermission = await requestLocationPermission()
+            if (hasPermission){
+                setHasPermission(true)
+            }
         })()
     }, [])
 
@@ -39,12 +34,10 @@ export const useGeofencing = () => {
         Geolocation.getCurrentPosition(
             (position)=>{
                 const {latitude, longitude} = position.coords;
-                console.log('positionnnnn inicialll', latitude, longitude)
                 setCurrentLocation({latitude, longitude})
             },
             (error)=>{
                 console.error('Error obteniendo ubicación', error)
-                console.log('AMOGO ERRROR posicion inicial')
             },
             {
                 enableHighAccuracy: true,
@@ -54,12 +47,10 @@ export const useGeofencing = () => {
         const watchId = Geolocation.watchPosition(
             (position)=>{
                 const {latitude, longitude} = position.coords;
-                console.log('positionnnnn watcher', latitude, longitude)
                 setCurrentLocation({latitude, longitude})
             },
             (error)=>{
                 console.error('Error obteniendo ubicación', error)
-                console.log('AMOGO ERRROR watcher')
             },
             {
                 enableHighAccuracy: true,
@@ -94,7 +85,7 @@ export const useGeofencing = () => {
     const updateGeofence = useCallback(
         async (newGeofence: Geofence) => {
             await saveGeofence(newGeofence)
-            setGeofence(newGeofence)
+            addGeofence(newGeofence)
             hasNotified.current = false
         },
         []
@@ -105,7 +96,6 @@ export const useGeofencing = () => {
         geofence,
         isInside,
         updateGeofence,
-        setGeofence
     }
 
 }

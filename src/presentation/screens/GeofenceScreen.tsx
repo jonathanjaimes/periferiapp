@@ -1,16 +1,29 @@
 import { Dimensions, StyleSheet, Text, View } from 'react-native';
-import React from 'react';
+
 import { useGeofencing } from '../../hooks/useGeofencing';
 import CustomButton from '../components/CustomButton';
-import MapView, { Marker, Circle } from 'react-native-maps';
-import { getMapRegion } from '../../utils/geo';
 import ModalGeofenceForm from '../components/ModalGeofenceForm';
 import { useModal } from '../../hooks/useModal';
+import Map from '../components/Map';
+
+import React, { useRef } from 'react';
+import MapView from 'react-native-maps';
+import { useMapRegion } from '../../hooks/useMapRegion';
+import { useMapVisibility } from '../../hooks/useMapVisibility';
+import { useMapCamera } from '../../hooks/useMapCamera';
 
 export default function GeofenceScreen() {
   const { visible, openModal, closeModal } = useModal();
   const { geofence, currentLocation, isInside, updateGeofence } =
     useGeofencing();
+
+  const mapRef = useRef<MapView>(null);
+
+  const initialRegion = useMapRegion({ geofence, currentLocation });
+
+  const { mapVisible } = useMapVisibility();
+
+  useMapCamera(mapRef, initialRegion);
 
   return (
     <View style={styles.container}>
@@ -22,61 +35,45 @@ export default function GeofenceScreen() {
       {visible && (
         <ModalGeofenceForm
           onClose={closeModal}
-          geofence={geofence || { latitude: 0, longitude: 0, radius: 0 }}
+          geofence={
+            geofence || {
+              latitude: 0,
+              longitude: 0,
+              radius: 0,
+              name: '',
+              id: 0,
+            }
+          }
           updateGeofence={updateGeofence}
           currentLocation={currentLocation}
         />
       )}
       <View style={styles.mapContainer}>
-        <MapView
-          style={styles.map}
-          customMapStyle={[]}
-          showsUserLocation={true}
-          initialRegion={
-            geofence
-              ? getMapRegion({
-                  latitude: geofence.latitude,
-                  longitude: geofence.longitude,
-                  radius: geofence.radius,
-                })
-              : {
-                  latitude: 4.60971,
-                  longitude: -74.08175,
-                  latitudeDelta: 0.01,
-                  longitudeDelta: 0.01,
-                }
-          }
-          region={
-            geofence
-              ? getMapRegion({
-                  latitude: geofence.latitude,
-                  longitude: geofence.longitude,
-                  radius: geofence.radius,
-                })
-              : undefined
-          }
-        >
-          {geofence && (
-            <>
-              <Marker
-                coordinate={{
-                  latitude: geofence.latitude,
-                  longitude: geofence.longitude,
-                }}
-                title="Zona objetivo"
-              />
-              <Circle
-                center={{
-                  latitude: geofence.latitude,
-                  longitude: geofence.longitude,
-                }}
-                radius={geofence.radius}
-                strokeColor="rgba(205,52,34,0.8)"
-                fillColor="rgba(205,52,34,0.2)"
-              />
-            </>
-          )}
-        </MapView>
+        {geofence || currentLocation ? (
+          mapVisible ? (
+            <Map
+              key={
+                geofence
+                  ? `geo-${geofence.latitude}-${geofence.longitude}-${geofence.radius}`
+                  : currentLocation
+                  ? `loc-${currentLocation.latitude}-${currentLocation.longitude}`
+                  : 'default'
+              }
+              ref={mapRef}
+              geofence={geofence || undefined}
+              initialRegion={initialRegion}
+              // @ts-ignore
+              removeClippedSubviews={false}
+              enableReinitialize={true}
+            />
+          ) : null
+        ) : (
+          <View
+            style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}
+          >
+            <Text>Obteniendo ubicación...</Text>
+          </View>
+        )}
         <View style={styles.panel}>
           <Text
             style={[

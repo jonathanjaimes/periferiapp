@@ -7,19 +7,13 @@ import {
   StyleSheet,
   Dimensions,
 } from 'react-native';
+import { Geofence } from '../../domain/models/Geofence';
 
 const { height } = Dimensions.get('window');
 
-interface User {
-  id: number;
-  name: string;
-  username: string;
-  email: string;
-}
-
 interface UserSearchOverlayProps {
-  results: User[];
-  onSelect: (user: User) => void;
+  results: Geofence[];
+  onSelect: (geofence: Geofence) => void;
   onClose: () => void;
   query: string;
 }
@@ -35,7 +29,11 @@ export default function UserSearchOverlay({
       {results.length > 0 ? (
         <FlatList
           data={results}
-          keyExtractor={item => item.id.toString()}
+          keyExtractor={item =>
+            item.latitude.toString() +
+            item.longitude.toString() +
+            item.radius.toString()
+          }
           keyboardShouldPersistTaps="handled"
           renderItem={({ item }) => (
             <TouchableOpacity
@@ -43,8 +41,6 @@ export default function UserSearchOverlay({
               onPress={() => onSelect(item)}
             >
               <Text style={styles.name}>{item.name}</Text>
-              <Text style={styles.username}>@{item.username}</Text>
-              <Text style={styles.email}>{item.email}</Text>
             </TouchableOpacity>
           )}
         />

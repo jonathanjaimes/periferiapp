@@ -1,7 +1,6 @@
-import { saveUser } from '../../data/storage/auth';
+import { saveUser } from '../../data/storage';
 
 export async function loginUser(username: string) {
-  // Aquí podrías agregar validaciones o lógica adicional
   await saveUser(username);
   return username;
 }

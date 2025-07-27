@@ -1,6 +1,6 @@
 import { useFavoritesStore } from '../store/favoritesStore';
 import { useAuthStore } from '../store/authStore';
-import type { User } from '../domain/models/User';
+import type { Geofence } from '../domain/models/Geofence';
 
 export function useFavoriteActions() {
   const authUser = useAuthStore(state => state.user);
@@ -8,14 +8,14 @@ export function useFavoriteActions() {
   const addFavorite = useFavoritesStore(state => state.addFavorite);
   const removeFavorite = useFavoritesStore(state => state.removeFavorite);
 
-  const isFavorite = (userId: number) => favorites.some(u => u.id === userId);
+  const isFavorite = (geofenceId: number) => favorites.some(g => g.id === geofenceId);
 
-  const handleFavorite = async (userObj: User) => {
+  const handleFavorite = async (geofenceObj: Geofence) => {
     if (!authUser) return;
-    if (isFavorite(userObj.id)) {
-      await removeFavorite(authUser, userObj.id);
+    if (isFavorite(geofenceObj.id)) {
+      await removeFavorite(authUser, geofenceObj.id);
     } else {
-      await addFavorite(authUser, userObj);
+      await addFavorite(authUser, geofenceObj);
     }
   };
 

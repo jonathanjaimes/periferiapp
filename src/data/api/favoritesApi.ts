@@ -16,7 +16,7 @@ export async function getFavoritesForUser(username: string): Promise<User[]> {
 export async function addFavoriteUseCase(username: string, user: User): Promise<User[]> {
   try {
     const current = await getFavoritesForUser(username);
-    if (!current.find(u => u.id === user.id)) {
+    if (!current.find(u => u.username === user.username)) {
       const updated = [...current, user];
       await AsyncStorage.setItem(FAVORITES_KEY_PREFIX + username, JSON.stringify(updated));
       return updated;
@@ -28,10 +28,10 @@ export async function addFavoriteUseCase(username: string, user: User): Promise<
   }
 }
 
-export async function removeFavoriteUseCase(username: string, userId: number): Promise<User[]> {
+export async function removeFavoriteUseCase(username: string, user: User): Promise<User[]> {
   try {
     const current = await getFavoritesForUser(username);
-    const updated = current.filter(u => u.id !== userId);
+    const updated = current.filter(u => u.username !== user.username);
     await AsyncStorage.setItem(FAVORITES_KEY_PREFIX + username, JSON.stringify(updated));
     return updated;
   } catch (error) {

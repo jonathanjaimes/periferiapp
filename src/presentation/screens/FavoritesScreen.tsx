@@ -9,13 +9,13 @@ import {
 } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import type { RootStackParamList } from '../navigation/AppNavigator';
+import type { FeedStackParamList } from '../navigation/AppNavigator';
 import { useFavorites } from '../../hooks/useFavorites';
 
 export default function FavoritesScreen() {
   const { user, favorites, loading } = useFavorites();
   const navigation =
-    useNavigation<NativeStackNavigationProp<RootStackParamList>>();
+    useNavigation<NativeStackNavigationProp<FeedStackParamList>>();
 
   if (!user) {
     return (
@@ -52,11 +52,13 @@ export default function FavoritesScreen() {
       renderItem={({ item }) => (
         <TouchableOpacity
           style={styles.itemContainer}
-          onPress={() => navigation.navigate('UserDetail', { userId: item.id })}
+          onPress={() =>
+            navigation.navigate('GeofenceDetail', { geofenceId: item.id })
+          }
         >
-          <Text style={styles.name}>{item.name}</Text>
-          <Text style={styles.username}>@{item.username}</Text>
-          <Text style={styles.email}>{item.email}</Text>
+          <Text style={styles.name}>Nombre: {item.name}</Text>
+          <Text style={styles.latitude}>Latitud: {item.latitude}</Text>
+          <Text style={styles.longitude}>Longitud: {item.longitude}</Text>
         </TouchableOpacity>
       )}
     />
@@ -93,11 +95,11 @@ const styles = StyleSheet.create({
     fontSize: 16,
     marginBottom: 2,
   },
-  username: {
+  latitude: {
     color: '#888',
     marginBottom: 2,
   },
-  email: {
-    color: '#cd3422',
+  longitude: {
+    color: '#888',
   },
 });

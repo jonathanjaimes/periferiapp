@@ -1,6 +1,6 @@
 import { getFavorites } from '../../data/storage/favorites';
-import { User } from '../models/User';
+import { Geofence } from '../models/Geofence';
 
-export async function getFavoritesForUser(username: string): Promise<User[]> {
+export async function getFavoritesForUser(username: string): Promise<Geofence[]> {
   return await getFavorites(username);
 }

@@ -1,7 +1,8 @@
 import { useState, useRef } from 'react';
 import { Animated, Easing, TextInput } from 'react-native';
+import { Geofence } from '../domain/models/Geofence';
 
-export function useUserListLogic(users: any[]) {
+export function useGeofenceListLogic(geofences: Geofence[]) {
   const [query, setQuery] = useState('');
   const [inputFocused, setInputFocused] = useState(false);
   const inputRef = useRef<TextInput>(null);
@@ -44,14 +45,12 @@ export function useUserListLogic(users: any[]) {
     lastOffset.current = offsetY;
   };
 
-  const filteredUsers = !query.trim()
-    ? users
-    : users.filter((u: any) => {
+  const filteredGeofences = !query.trim()
+    ? geofences
+    : geofences.filter((g: Geofence) => {
         const q = query.toLowerCase();
         return (
-          u.name.toLowerCase().includes(q) ||
-          u.username.toLowerCase().includes(q) ||
-          u.email.toLowerCase().includes(q)
+          g.name.toLowerCase().includes(q)
         );
       });
 
@@ -65,6 +64,6 @@ export function useUserListLogic(users: any[]) {
     showSearchBar,
     setShowSearchBar,
     handleScroll,
-    filteredUsers,
+    filteredGeofences,
   };
 }

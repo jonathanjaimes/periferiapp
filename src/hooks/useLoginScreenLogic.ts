@@ -1,7 +1,7 @@
 import { useState, useCallback, useEffect } from 'react';
 import { useNavigation, CommonActions, useFocusEffect } from '@react-navigation/native';
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import type { RootStackParamList } from '../presentation/navigation/AppNavigator';
+import type { RootTabParamList } from '../presentation/navigation/AppNavigator';
 import { useLogin } from './useLogin';
 import { useAuthStore } from '../store/authStore';
 
@@ -9,7 +9,7 @@ export function useLoginScreenLogic() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const { login, loading, error, user } = useLogin();
-  const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
+  const navigation = useNavigation<NativeStackNavigationProp<RootTabParamList>>();
   const setError = useAuthStore((state) => state.setError);
 
   useFocusEffect(
