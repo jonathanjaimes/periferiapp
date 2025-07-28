@@ -4,6 +4,7 @@ module.exports = {
     "node_modules/(?!(react-native|@react-native|@react-navigation|react-native-vector-icons)/)"
   ],
   preset: 'react-native',
+  roots: ['<rootDir>/tests'],
   moduleNameMapper: {
     "^react-native-vector-icons/Ionicons$": "<rootDir>/__mocks__/react-native-vector-icons.js",
     '^@react-native-async-storage/async-storage$': '<rootDir>/__mocks__/@react-native-async-storage/async-storage.js',
