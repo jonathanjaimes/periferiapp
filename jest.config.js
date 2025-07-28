@@ -1,4 +1,10 @@
 module.exports = {
+  collectCoverage: true,
+  collectCoverageFrom: [
+    "src/**/*.{ts,tsx}",
+    "!src/**/*.d.ts"
+  ],
+  coverageDirectory: 'coverage',
   setupFilesAfterEnv: ['<rootDir>/jest.setup.js'],
   transformIgnorePatterns: [
     "node_modules/(?!(react-native|@react-native|@react-navigation|react-native-vector-icons)/)"

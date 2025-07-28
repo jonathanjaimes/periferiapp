@@ -56,7 +56,6 @@ export function getMapRegion({
   longitude: number;
   radius: number;
 }) {
-  console.log('desdeGeoMapRegionnm', latitude, longitude, radius);
   const radiusInKm = radius / 1000;
   const latitudeDelta = (radiusInKm / 111) * 2.2;
   const { width, height } = Dimensions.get('window');
