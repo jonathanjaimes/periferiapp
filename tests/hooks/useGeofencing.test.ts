@@ -162,7 +162,6 @@ describe('useGeofencing', () => {
   it('should handle getCurrentPosition error', async () => {
     const { requestLocationPermission } = require('../../src/utils/geo');
     const Geolocation = require('@react-native-community/geolocation').default;
-    const consoleSpy = jest.spyOn(console, 'error').mockImplementation();
     
     requestLocationPermission.mockResolvedValue(true);
     
@@ -171,14 +170,16 @@ describe('useGeofencing', () => {
       error(mockError);
     });
     
-    renderHook(() => useGeofencing());
+    const { result } = renderHook(() => useGeofencing());
     
     await act(async () => {
       await new Promise(resolve => setTimeout(resolve, 0));
     });
     
-    expect(consoleSpy).toHaveBeenCalledWith('Error obteniendo ubicación', mockError);
-    consoleSpy.mockRestore();
+    // Verificar que se logó el error (console.error está mockeado globalmente)
+    expect(console.error).toHaveBeenCalledWith('Error obteniendo ubicación', mockError);
+    // Verificar que el estado permanece null tras el error
+    expect(result.current.currentLocation).toBeNull();
   });
 
   it('should handle watchPosition success', async () => {
@@ -211,7 +212,6 @@ describe('useGeofencing', () => {
   it('should handle watchPosition error', async () => {
     const { requestLocationPermission } = require('../../src/utils/geo');
     const Geolocation = require('@react-native-community/geolocation').default;
-    const consoleSpy = jest.spyOn(console, 'error').mockImplementation();
     
     requestLocationPermission.mockResolvedValue(true);
     
@@ -221,14 +221,16 @@ describe('useGeofencing', () => {
       return 123;
     });
     
-    renderHook(() => useGeofencing());
+    const { result } = renderHook(() => useGeofencing());
     
     await act(async () => {
       await new Promise(resolve => setTimeout(resolve, 0));
     });
     
-    expect(consoleSpy).toHaveBeenCalledWith('Error obteniendo ubicación', mockError);
-    consoleSpy.mockRestore();
+    // Verificar que se logó el error (console.error está mockeado globalmente)
+    expect(console.error).toHaveBeenCalledWith('Error obteniendo ubicación', mockError);
+    // Verificar que el estado permanece null tras el error
+    expect(result.current.currentLocation).toBeNull();
   });
 
   it('should clear watch on unmount', async () => {

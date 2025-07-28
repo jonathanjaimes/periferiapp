@@ -120,4 +120,6 @@ describe('Map', () => {
     const views = UNSAFE_getAllByType(require('react-native').View);
     expect(views.length).toBeGreaterThanOrEqual(3);
   });
+
+
 });

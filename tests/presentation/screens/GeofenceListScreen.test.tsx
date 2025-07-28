@@ -17,15 +17,19 @@ jest.mock('../../../src/hooks/useGeofenceList', () => ({
 }));
 
 // Mock de useGeofenceListLogic
+const mockSetQuery = jest.fn();
+const mockSetInputFocused = jest.fn();
+const mockHandleScroll = jest.fn();
+
 jest.mock('../../../src/hooks/useGeofenceListLogic', () => ({
   useGeofenceListLogic: () => ({
     query: '',
-    setQuery: jest.fn(),
+    setQuery: mockSetQuery,
     inputFocused: false,
-    setInputFocused: jest.fn(),
+    setInputFocused: mockSetInputFocused,
     inputRef: { current: null },
     searchBarAnim: { interpolate: jest.fn(() => 0) },
-    handleScroll: jest.fn(),
+    handleScroll: mockHandleScroll,
     filteredGeofences: [],
   }),
 }));
@@ -180,5 +184,50 @@ describe('GeofenceListScreen', () => {
     expect(flatList.props.onScroll).toBeDefined();
     expect(flatList.props.scrollEventThrottle).toBe(16);
     expect(flatList.props.contentContainerStyle).toEqual({ paddingTop: 86 });
+  });
+
+  it('should handle text input interactions', () => {
+    mockUseGeofenceList.mockReturnValue({
+      geofences: [],
+      isLoading: false,
+      isError: false,
+      navigation: mockNavigation,
+    });
+
+    const { UNSAFE_getByType } = render(<GeofenceListScreen />);
+    
+    const textInput = UNSAFE_getByType(require('react-native').TextInput);
+    
+    // Simular onChangeText
+    textInput.props.onChangeText('test query');
+    expect(mockSetQuery).toHaveBeenCalledWith('test query');
+    
+    // Simular onFocus
+    textInput.props.onFocus();
+    expect(mockSetInputFocused).toHaveBeenCalledWith(true);
+    
+    // Simular onBlur
+    textInput.props.onBlur();
+    expect(mockSetInputFocused).toHaveBeenCalledWith(false);
+  });
+
+  it('should handle TouchableOpacity interactions', () => {
+    mockUseGeofenceList.mockReturnValue({
+      geofences: [],
+      isLoading: false,
+      isError: false,
+      navigation: mockNavigation,
+    });
+
+    const { UNSAFE_getAllByType } = render(<GeofenceListScreen />);
+    
+    // Verificar que hay TouchableOpacity elements (para los botones de búsqueda)
+    const touchableOpacities = UNSAFE_getAllByType(require('react-native').TouchableOpacity);
+    expect(touchableOpacities.length).toBeGreaterThan(0);
+    
+    // Verificar que cada TouchableOpacity tiene una función onPress
+    touchableOpacities.forEach(touchable => {
+      expect(typeof touchable.props.onPress).toBe('function');
+    });
   });
 });

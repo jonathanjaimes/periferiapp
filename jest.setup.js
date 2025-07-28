@@ -16,6 +16,13 @@ jest.mock('react-native-safe-area-context', () => {
 
 jest.mock('react-native-vector-icons/Ionicons', () => 'Icon');
 
+// Mock global de console.error para tests más limpios
+// Mantiene el logging en producción pero silencia en tests
+global.console = {
+  ...console,
+  error: jest.fn(), // Mock silencioso de console.error
+};
+
 // Configuración global para tests de React Query v5+
 import { QueryClient } from '@tanstack/react-query';
 
