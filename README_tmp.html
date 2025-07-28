@@ -1,0 +1,650 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>README.md</title>
+    <meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+    
+<style>
+/* https://github.com/microsoft/vscode/blob/master/extensions/markdown-language-features/media/markdown.css */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+body {
+	font-family: var(--vscode-markdown-font-family, -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif);
+	font-size: var(--vscode-markdown-font-size, 14px);
+	padding: 0 26px;
+	line-height: var(--vscode-markdown-line-height, 22px);
+	word-wrap: break-word;
+}
+
+html,footer,header{
+	font-family: var(--vscode-markdown-font-family, -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif);
+	font-size: var(--vscode-markdown-font-size, 14px);
+}
+
+#code-csp-warning {
+	position: fixed;
+	top: 0;
+	right: 0;
+	color: white;
+	margin: 16px;
+	text-align: center;
+	font-size: 12px;
+	font-family: sans-serif;
+	background-color:#444444;
+	cursor: pointer;
+	padding: 6px;
+	box-shadow: 1px 1px 1px rgba(0,0,0,.25);
+}
+
+#code-csp-warning:hover {
+	text-decoration: none;
+	background-color:#007acc;
+	box-shadow: 2px 2px 2px rgba(0,0,0,.25);
+}
+
+body.scrollBeyondLastLine {
+	margin-bottom: calc(100vh - 22px);
+}
+
+body.showEditorSelection .code-line {
+	position: relative;
+}
+
+body.showEditorSelection .code-active-line:before,
+body.showEditorSelection .code-line:hover:before {
+	content: "";
+	display: block;
+	position: absolute;
+	top: 0;
+	left: -12px;
+	height: 100%;
+}
+
+body.showEditorSelection li.code-active-line:before,
+body.showEditorSelection li.code-line:hover:before {
+	left: -30px;
+}
+
+.vscode-light.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.15);
+}
+
+.vscode-light.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.40);
+}
+
+.vscode-light.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-dark.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.4);
+}
+
+.vscode-dark.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.60);
+}
+
+.vscode-dark.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-high-contrast.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 160, 0, 0.7);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 160, 0, 1);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+img {
+	max-width: 100%;
+	max-height: 100%;
+}
+
+a {
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+a:focus,
+input:focus,
+select:focus,
+textarea:focus {
+	outline: 1px solid -webkit-focus-ring-color;
+	outline-offset: -1px;
+}
+
+hr {
+	border: 0;
+	height: 2px;
+	border-bottom: 2px solid;
+}
+
+h1 {
+	padding-bottom: 0.3em;
+	line-height: 1.2;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+}
+
+h1, h2, h3 {
+	font-weight: normal;
+}
+
+table {
+	border-collapse: collapse;
+}
+
+table > thead > tr > th {
+	text-align: left;
+	border-bottom: 1px solid;
+}
+
+table > thead > tr > th,
+table > thead > tr > td,
+table > tbody > tr > th,
+table > tbody > tr > td {
+	padding: 5px 10px;
+}
+
+table > tbody > tr + tr > td {
+	border-top: 1px solid;
+}
+
+blockquote {
+	margin: 0 7px 0 5px;
+	padding: 0 16px 0 10px;
+	border-left-width: 5px;
+	border-left-style: solid;
+}
+
+code {
+	font-family: Menlo, Monaco, Consolas, "Droid Sans Mono", "Courier New", monospace, "Droid Sans Fallback";
+	font-size: 1em;
+	line-height: 1.357em;
+}
+
+body.wordWrap pre {
+	white-space: pre-wrap;
+}
+
+pre:not(.hljs),
+pre.hljs code > div {
+	padding: 16px;
+	border-radius: 3px;
+	overflow: auto;
+}
+
+pre code {
+	color: var(--vscode-editor-foreground);
+	tab-size: 4;
+}
+
+/** Theming */
+
+.vscode-light pre {
+	background-color: rgba(220, 220, 220, 0.4);
+}
+
+.vscode-dark pre {
+	background-color: rgba(10, 10, 10, 0.4);
+}
+
+.vscode-high-contrast pre {
+	background-color: rgb(0, 0, 0);
+}
+
+.vscode-high-contrast h1 {
+	border-color: rgb(0, 0, 0);
+}
+
+.vscode-light table > thead > tr > th {
+	border-color: rgba(0, 0, 0, 0.69);
+}
+
+.vscode-dark table > thead > tr > th {
+	border-color: rgba(255, 255, 255, 0.69);
+}
+
+.vscode-light h1,
+.vscode-light hr,
+.vscode-light table > tbody > tr + tr > td {
+	border-color: rgba(0, 0, 0, 0.18);
+}
+
+.vscode-dark h1,
+.vscode-dark hr,
+.vscode-dark table > tbody > tr + tr > td {
+	border-color: rgba(255, 255, 255, 0.18);
+}
+
+</style>
+
+<style>
+/* Tomorrow Theme */
+/* http://jmblog.github.com/color-themes-for-google-code-highlightjs */
+/* Original theme - https://github.com/chriskempson/tomorrow-theme */
+
+/* Tomorrow Comment */
+.hljs-comment,
+.hljs-quote {
+	color: #8e908c;
+}
+
+/* Tomorrow Red */
+.hljs-variable,
+.hljs-template-variable,
+.hljs-tag,
+.hljs-name,
+.hljs-selector-id,
+.hljs-selector-class,
+.hljs-regexp,
+.hljs-deletion {
+	color: #c82829;
+}
+
+/* Tomorrow Orange */
+.hljs-number,
+.hljs-built_in,
+.hljs-builtin-name,
+.hljs-literal,
+.hljs-type,
+.hljs-params,
+.hljs-meta,
+.hljs-link {
+	color: #f5871f;
+}
+
+/* Tomorrow Yellow */
+.hljs-attribute {
+	color: #eab700;
+}
+
+/* Tomorrow Green */
+.hljs-string,
+.hljs-symbol,
+.hljs-bullet,
+.hljs-addition {
+	color: #718c00;
+}
+
+/* Tomorrow Blue */
+.hljs-title,
+.hljs-section {
+	color: #4271ae;
+}
+
+/* Tomorrow Purple */
+.hljs-keyword,
+.hljs-selector-tag {
+	color: #8959a8;
+}
+
+.hljs {
+	display: block;
+	overflow-x: auto;
+	color: #4d4d4c;
+	padding: 0.5em;
+}
+
+.hljs-emphasis {
+	font-style: italic;
+}
+
+.hljs-strong {
+	font-weight: bold;
+}
+</style>
+
+<style>
+/*
+ * Custom MD PDF CSS
+ */
+html,footer,header{
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif, "Meiryo";
+
+ }
+body {
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif, "Meiryo";
+	padding: 0 12px;
+}
+
+pre {
+	background-color: #f8f8f8;
+	border: 1px solid #cccccc;
+	border-radius: 3px;
+	overflow-x: auto;
+	white-space: pre-wrap;
+	overflow-wrap: break-word;
+}
+
+pre:not(.hljs) {
+	padding: 23px;
+	line-height: 19px;
+}
+
+blockquote {
+	background: rgba(127, 127, 127, 0.1);
+	border-color: rgba(0, 122, 204, 0.5);
+}
+
+.emoji {
+	height: 1.4em;
+}
+
+code {
+	font-size: 14px;
+	line-height: 19px;
+}
+
+/* for inline code */
+:not(pre):not(.hljs) > code {
+	color: #C9AE75; /* Change the old color so it seems less like an error */
+	font-size: inherit;
+}
+
+/* Page Break : use <div class="page"/> to insert page break
+-------------------------------------------------------- */
+.page {
+	page-break-after: always;
+}
+
+</style>
+<link rel="stylesheet" href="file:///Users/jonathanjaimes/Desktop/Jou/repaso/periferiapp/R%3A%5C2.Travail%5C1.Enseignement%5CCours%5C_1.Outils%5C2.Developpement%5C1.SCSS%5Cmain.css" type="text/css"><link rel="stylesheet" href="file:///Users/jonathanjaimes/Desktop/Jou/repaso/periferiapp/D%3A%5Crdaros%5CCours%5C_1.Outils%5C2.Developpement%5C1.SCSS%5Cmain.css" type="text/css">
+</head>
+
+<body>
+    <h1 id="periferiapp-geofencing-assistant">PeriferiApp: Geofencing Assistant</h1>
+<p>PeriferiApp es una aplicación móvil desarrollada con React Native y TypeScript. Su objetivo principal es permitir a los usuarios crear y gestionar &quot;geocercas&quot; (áreas geográficas virtuales). La aplicación notifica activamente al usuario cada vez que su ubicación actual entra o sale de una de estas geocercas predefinidas.</p>
+<h2 id="caracter%C3%ADsticas-principales">Características Principales</h2>
+<ul>
+<li><strong>Autenticación de Usuarios</strong>: Sistema de inicio de sesión seguro para gestionar los datos de cada usuario.</li>
+<li><strong>Creación de Geocercas</strong>: Los usuarios pueden definir una geocerca especificando un punto central (latitud, longitud) y un radio.</li>
+<li><strong>Notificaciones en Tiempo Real</strong>: La aplicación monitorea la ubicación del dispositivo y envía notificaciones push cuando el usuario cruza los límites de una geocerca (entrada/salida).</li>
+<li><strong>Listado y Detalles</strong>: Todas las geocercas creadas se guardan y se muestran en una lista. El usuario puede ver los detalles de cada una.</li>
+<li><strong>Gestión de Favoritos</strong>: Los usuarios pueden marcar y desmarcar geocercas como favoritas para un acceso rápido.</li>
+</ul>
+<h2 id="arquitectura-del-proyecto-clean-architecture">Arquitectura del Proyecto: Clean Architecture</h2>
+<p>El proyecto está estructurado siguiendo los principios de <strong>Clean Architecture</strong>. Esta arquitectura separa el software en capas, con una regla estricta de dependencia: las capas externas dependen de las internas, pero las internas no saben nada sobre las externas. Esto hace que la lógica de negocio (el núcleo de la aplicación) sea independiente de la base de datos, la interfaz de usuario y cualquier framework externo.</p>
+<pre class="hljs"><code><div>┌──────────────────┐
+│  Presentation    │  (UI: Screens, Components, Hooks)
+└────────┬─────────┘
+         │
+         ▼
+┌──────────────────┐
+│      Domain      │  (Business Logic: Usecases, Models)
+└────────┬─────────┘
+         │
+         ▼
+┌──────────────────┐
+│       Data       │  (Data Sources: Repositories, API, Storage)
+└──────────────────┘
+</div></code></pre>
+<h3 id="capa-de-dominio-srcdomain">Capa de Dominio (<code>src/domain</code>)</h3>
+<p>Es el corazón de la aplicación. Contiene la lógica de negocio pura y no tiene dependencias de ninguna otra capa. Se divide en:</p>
+<ul>
+<li><strong>Models</strong>: Define las entidades de negocio (<code>Geofence</code>, <code>User</code>). Son estructuras de datos simples.</li>
+<li><strong>Repositories (Interfaces)</strong>: Define los contratos (<code>IFavoritesRepository</code>, <code>IGeofencesRepository</code>) que la capa de datos debe implementar. El dominio no sabe <em>cómo</em> se obtienen los datos, solo <em>qué</em> operaciones se pueden realizar.</li>
+<li><strong>Usecases</strong>: Contiene las acciones específicas que un usuario puede realizar (<code>saveGeofence</code>, <code>addFavorite</code>, <code>isWithinGeofence</code>). Cada caso de uso encapsula una única pieza de lógica de negocio.</li>
+</ul>
+<h3 id="capa-de-datos-srcdata">Capa de Datos (<code>src/data</code>)</h3>
+<p>Implementa las interfaces de repositorio definidas en el dominio. Es responsable de decidir de dónde provienen los datos (API, base de datos local, etc.).</p>
+<ul>
+<li><strong>Repositories (Implementations)</strong>: Implementa los contratos del dominio. Por ejemplo, <code>GeofencesRepository</code> podría obtener datos de una API remota o del <code>AsyncStorage</code> local.</li>
+<li><strong>API / Storage</strong>: Lógica de bajo nivel para interactuar con fuentes de datos externas, como <code>AsyncStorage</code> o llamadas de red.</li>
+</ul>
+<h3 id="capa-de-presentaci%C3%B3n-srcpresentation">Capa de Presentación (<code>src/presentation</code>)</h3>
+<p>Es la capa de la interfaz de usuario (UI). Es responsable de mostrar los datos al usuario y de capturar sus interacciones.</p>
+<ul>
+<li><strong>Screens</strong>: Componentes que representan pantallas completas de la aplicación (<code>GeofenceListScreen</code>, <code>LoginScreen</code>).</li>
+<li><strong>Components</strong>: Componentes reutilizables (<code>CustomButton</code>, <code>FavoriteButton</code>).</li>
+<li><strong>Hooks</strong>: Hooks de React personalizados (<code>useGeofenceList</code>, <code>useLogin</code>) que conectan la UI con los casos de uso del dominio para ejecutar la lógica de negocio.</li>
+</ul>
+<h2 id="solid-y-buenas-pr%C3%A1cticas">SOLID y Buenas Prácticas</h2>
+<p>El proyecto se adhiere a los principios SOLID para crear un software robusto y mantenible:</p>
+<ul>
+<li>
+<p><strong>(S) Principio de Responsabilidad Única</strong>: Cada componente, hook y caso de uso tiene una única responsabilidad. Por ejemplo, el caso de uso <code>addFavorite</code> solo se encarga de la lógica para agregar un favorito, mientras que el componente <code>FavoriteButton</code> solo se encarga de su representación visual y de invocar la acción correspondiente.</p>
+</li>
+<li>
+<p><strong>(O) Principio de Abierto/Cerrado</strong>: La arquitectura permite agregar nuevas funcionalidades sin modificar el código existente. Por ejemplo, para agregar una nueva fuente de datos (como Firebase), solo necesitaríamos crear una nueva implementación del repositorio en la capa de datos, sin tocar el dominio ni la presentación.</p>
+</li>
+<li>
+<p><strong>(L) Principio de Sustitución de Liskov</strong>: Las implementaciones de los repositorios en la capa de datos (<code>GeofencesRepository</code>) son sustituibles por cualquier otra implementación que cumpla con el contrato de la interfaz (<code>IGeofencesRepository</code>) sin afectar el comportamiento del dominio.</p>
+</li>
+<li>
+<p><strong>(I) Principio de Segregación de Interfaces</strong>: Se definen interfaces específicas para cada necesidad. Por ejemplo, <code>IAuthRepository</code> y <code>IFavoritesRepository</code> son interfaces separadas, por lo que un cliente que solo necesita autenticación no depende de los métodos de favoritos.</p>
+</li>
+<li>
+<p><strong>(D) Principio de Inversión de Dependencias</strong>: Este es el pilar de nuestra Clean Architecture. La capa de <code>Domain</code> no depende de la capa de <code>Data</code>; ambas dependen de abstracciones (las interfaces de repositorio). Esto permite que la lógica de negocio sea completamente independiente de los detalles de implementación de los datos.</p>
+</li>
+</ul>
+<h2 id="estructura-de-directorios">Estructura de Directorios</h2>
+<p>La estructura del proyecto refleja la separación de capas:</p>
+<pre class="hljs"><code><div>periferiapp/
+├── src/
+│   ├── components/      # Componentes de UI reutilizables y globales
+│   ├── data/            # Implementación de repositorios y fuentes de datos
+│   ├── domain/          # Lógica de negocio, modelos y casos de uso
+│   ├── hooks/           # Hooks personalizados para la lógica de presentación
+│   ├── presentation/    # Pantallas, componentes de UI y navegación
+│   ├── store/           # Gestión de estado global (ej. Zustand)
+│   ├── types/           # Definiciones de tipos globales
+│   └── utils/           # Funciones de utilidad
+├── tests/               # Tests unitarios y de integración
+└── README.md
+</div></code></pre>
+<h2 id="testing">Testing</h2>
+<p>El proyecto cuenta con una estructura de tests centralizada en la carpeta <code>/tests</code>, que replica la estructura de <code>/src</code>. Esto facilita la localización de los tests y promueve una alta cobertura de código, asegurando la calidad y el correcto funcionamiento de la lógica de negocio y los componentes de la UI.</p>
+<h2 id="c%C3%B3mo-empezar">Cómo Empezar</h2>
+<ol>
+<li>
+<p><strong>Clonar el repositorio</strong>:</p>
+<pre class="hljs"><code><div>git <span class="hljs-built_in">clone</span> https://github.com/tu-usuario/periferiapp.git
+<span class="hljs-built_in">cd</span> periferiapp
+</div></code></pre>
+</li>
+<li>
+<p><strong>Instalar dependencias</strong>:</p>
+<pre class="hljs"><code><div>npm install
+<span class="hljs-comment"># o</span>
+yarn install
+</div></code></pre>
+</li>
+<li>
+<p><strong>Configurar el entorno</strong>:</p>
+<ul>
+<li>Si es necesario, crea un archivo <code>.env</code> con las variables de entorno requeridas.</li>
+</ul>
+</li>
+<li>
+<p><strong>Ejecutar en iOS</strong>:</p>
+<pre class="hljs"><code><div>npx react-native run-ios
+</div></code></pre>
+</li>
+<li>
+<p><strong>Ejecutar en Android</strong>:</p>
+<pre class="hljs"><code><div>npx react-native run-android
+</div></code></pre>
+</li>
+</ol>
+<hr>
+<h2 id="tecnolog%C3%ADas-principales">Tecnologías principales</h2>
+<ul>
+<li><strong>React Native</strong>: Framework principal para desarrollo multiplataforma.</li>
+<li><strong>TypeScript</strong>: Tipado estático para mayor robustez y mantenibilidad.</li>
+<li><strong>React Navigation</strong>: Navegación entre pantallas (stack y tabs).</li>
+<li><strong>Zustand</strong>: Manejo de estado global simple y eficiente.</li>
+<li><strong>React Query</strong>: Gestión de datos remotos, caché y sincronización.</li>
+<li><strong>AsyncStorage</strong>: Persistencia local de datos.</li>
+<li><strong>React Native Vector Icons</strong>: Iconografía moderna y personalizable.</li>
+<li><strong>React Hook Form</strong>: Manejo de formularios y validaciones.</li>
+<li><strong>Jest &amp; Testing Library</strong>: Pruebas unitarias y de hooks.</li>
+<li><strong>ESLint &amp; Prettier</strong>: Linting y formateo automático de código.</li>
+</ul>
+<hr>
+<h2 id="arquitectura-y-estructura">Arquitectura y estructura</h2>
+<ul>
+<li><strong>Modular y escalable</strong>: Separación clara por capas y dominios.
+<ul>
+<li><code>/src/presentation</code>: Pantallas, componentes UI y navegación.</li>
+<li><code>/src/hooks</code>: Hooks personalizados para lógica reutilizable.</li>
+<li><code>/src/store</code>: Estado global (Zustand) para autenticación, usuarios y favoritos.</li>
+<li><code>/src/data/api</code>: Llamadas y hooks para consumo de APIs.</li>
+<li><code>/src/data/storage</code>: Persistencia local (AsyncStorage).</li>
+<li><code>/src/domain/models</code>: Tipos y modelos de negocio.</li>
+</ul>
+</li>
+<li><strong>Principio de responsabilidad única</strong>: Cada módulo tiene una función clara.</li>
+<li><strong>Separación de lógica de UI y datos</strong>: La lógica de negocio y acceso a datos está desacoplada de la interfaz.</li>
+<li><strong>Uso de hooks</strong>: Para lógica compartida, side effects y gestión de estado local/global.</li>
+</ul>
+<hr>
+<h2 id="%C2%BFc%C3%B3mo-funciona-la-app">¿Cómo funciona la app?</h2>
+<ul>
+<li>Al abrir la aplicación, puedes visualizar una <strong>lista de usuarios</strong> disponibles.</li>
+<li>Al seleccionar un usuario, accedes a la <strong>pantalla de detalle</strong>, donde puedes ver información ampliada de ese usuario.</li>
+<li>Si deseas agregar usuarios a favoritos, primero debes <strong>iniciar sesión</strong> (autenticación básica).</li>
+<li>Una vez autenticado, puedes <strong>agregar uno o más usuarios a tu lista de favoritos</strong>.</li>
+<li>Puedes consultar tus usuarios favoritos desde la sección correspondiente en la app.</li>
+</ul>
+<hr>
+<h2 id="buenas-pr%C3%A1cticas-y-principios-aplicados">Buenas prácticas y principios aplicados</h2>
+<ul>
+<li>
+<p><strong>Clean Code</strong>: Uso de nombres descriptivos y consistentes para variables, funciones, interfaces y carpetas. Las funciones son pequeñas, legibles y cumplen una sola responsabilidad.</p>
+</li>
+<li>
+<p><strong>DRY (Don't Repeat Yourself)</strong>: Lógica reutilizable extraída en hooks personalizados (<code>/src/hooks</code>) y utilidades. Ejemplo: hooks para manejo de usuarios y favoritos.</p>
+</li>
+<li>
+<p><strong>KISS (Keep It Simple, Stupid)</strong>: Soluciones simples y directas, evitando complejidad innecesaria en la lógica y la estructura de componentes.</p>
+</li>
+<li>
+<p><strong>Principios SOLID</strong>:</p>
+<ul>
+<li><strong>S</strong>: Cada clase, función o módulo tiene una única responsabilidad (ejemplo: <code>User.ts</code> solo define el modelo de usuario).</li>
+<li><strong>O</strong>: El código es fácilmente extensible sin modificar lo existente, gracias al uso de interfaces y tipado fuerte (<code>IUserRepository</code>, <code>IFavoritesRepository</code>).</li>
+<li><strong>L</strong>: Las implementaciones pueden ser intercambiadas sin romper la funcionalidad, usando interfaces y patrones de inyección de dependencias.</li>
+<li><strong>I</strong>: Se crean interfaces específicas para cada caso de uso, evitando dependencias innecesarias.</li>
+<li><strong>D</strong>: Las dependencias se abstraen mediante interfaces, facilitando pruebas y cambios futuros.</li>
+</ul>
+</li>
+<li>
+<p><strong>Uso intensivo de TypeScript</strong>: Tipado estricto en modelos, props y hooks. Se definen interfaces y tipos en <code>/src/domain/models</code> y <code>/src/domain/repositories</code>.</p>
+</li>
+<li>
+<p><strong>Separación de capas</strong>:</p>
+<ul>
+<li><strong>Presentación</strong>: Pantallas y componentes UI en <code>/src/presentation</code>.</li>
+<li><strong>Dominio</strong>: Modelos y contratos de negocio en <code>/src/domain</code>.</li>
+<li><strong>Datos</strong>: Acceso a APIs y persistencia local en <code>/src/data</code>.</li>
+</ul>
+</li>
+<li>
+<p><strong>Manejo centralizado de estado</strong>: Zustand para stores globales, React Query para datos remotos y caché, y AsyncStorage para persistencia local.</p>
+</li>
+<li>
+<p><strong>Manejo de errores</strong>: Validaciones y mensajes claros en formularios y respuestas de API. Se capturan y muestran errores amigables al usuario.</p>
+</li>
+<li>
+<p><strong>Pruebas unitarias y de integración</strong>: Uso de Jest y Testing Library para asegurar la calidad de hooks, stores y lógica de almacenamiento.</p>
+</li>
+<li>
+<p><strong>Formateo y linting automáticos</strong>: Configuración de ESLint y Prettier para mantener el código limpio y consistente en todo el proyecto.</p>
+</li>
+<li>
+<p><strong>Convenciones de nombres y organización</strong>:</p>
+<ul>
+<li>Archivos y carpetas en inglés y con nombres descriptivos.</li>
+<li>Imports organizados por bloques (librerías externas, módulos internos, estilos, etc.).</li>
+<li>Componentes y hooks nombrados con prefijo <code>use</code> cuando corresponde.</li>
+</ul>
+</li>
+<li>
+<p><strong>Control de versiones</strong>: <code>.gitignore</code> bien configurado para excluir archivos temporales, dependencias y archivos sensibles.</p>
+</li>
+<li>
+<p><strong>Accesibilidad y usabilidad</strong>: Uso de componentes accesibles y buenas prácticas de UI para mejorar la experiencia de usuario.</p>
+</li>
+<li>
+<p><strong>Escalabilidad y mantenibilidad</strong>: Estructura modular, separación por dominios y uso de interfaces para facilitar el crecimiento del proyecto y la incorporación de nuevas funcionalidades.</p>
+</li>
+</ul>
+<hr>
+<h2 id="dependencias-principales">Dependencias principales</h2>
+<ul>
+<li><code>react-native</code></li>
+<li><code>react</code></li>
+<li><code>@react-navigation/native</code> y stacks/tabs</li>
+<li><code>@tanstack/react-query</code></li>
+<li><code>zustand</code></li>
+<li><code>@react-native-async-storage/async-storage</code></li>
+<li><code>react-native-vector-icons</code></li>
+<li><code>react-hook-form</code></li>
+</ul>
+<h2 id="pruebas">Pruebas</h2>
+<ul>
+<li><strong>Jest</strong> para pruebas unitarias.</li>
+<li><strong>@testing-library/react-native</strong> para pruebas de hooks y componentes.</li>
+<li>Cobertura de pruebas para lógica de autenticación, favoritos y hooks personalizados.</li>
+</ul>
+<hr>
+<h2 id="ejecuci%C3%B3n-y-despliegue">Ejecución y despliegue</h2>
+<h3 id="android">Android</h3>
+<pre class="hljs"><code><div>npm run android
+</div></code></pre>
+<h3 id="ios">iOS</h3>
+<pre class="hljs"><code><div>npm run ios
+</div></code></pre>
+<h3 id="generar-apk-de-producci%C3%B3n">Generar APK de producción</h3>
+<pre class="hljs"><code><div><span class="hljs-built_in">cd</span> android
+./gradlew assembleRelease
+</div></code></pre>
+<p>El APK estará en <code>android/app/build/outputs/apk/release/app-release.apk</code></p>
+<hr>
+<h2 id="estructura-de-carpetas">Estructura de carpetas</h2>
+<pre class="hljs"><code><div>periferiapp/
+├── android/
+├── ios/
+├── src/
+│   ├── presentation/
+│   ├── hooks/
+│   ├── store/
+│   ├── data/
+│   │   ├── api/
+│   │   ├── storage/
+│   ├── domain/
+│   │   └── models/
+├── App.js / App.tsx
+├── package.json
+├── README.md
+└── ...
+</div></code></pre>
+<hr>
+<h2 id="recursos-y-enlaces-%C3%BAtiles">Recursos y enlaces útiles</h2>
+<ul>
+<li><a href="https://reactnative.dev/docs/getting-started">React Native Docs</a></li>
+<li><a href="https://docs.pmnd.rs/zustand/getting-started/introduction">Zustand</a></li>
+<li><a href="https://tanstack.com/query/v5/docs/react-native/overview">React Query</a></li>
+<li><a href="https://reactnavigation.org/docs/getting-started">React Navigation</a></li>
+<li><a href="https://testing-library.com/docs/react-native-testing-library/intro/">Testing Library</a></li>
+<li><a href="https://react-native-async-storage.github.io/async-storage/">AsyncStorage</a></li>
+</ul>
+<hr>
+
+</body>
+
+</html>

@@ -2,7 +2,7 @@
 
 PeriferiApp es una aplicación móvil desarrollada con React Native y TypeScript. Su objetivo principal es permitir a los usuarios crear y gestionar "geocercas" (áreas geográficas virtuales). La aplicación notifica activamente al usuario cada vez que su ubicación actual entra o sale de una de estas geocercas predefinidas.
 
-## ✨ Características Principales
+## Características Principales
 
 - **Autenticación de Usuarios**: Sistema de inicio de sesión seguro para gestionar los datos de cada usuario.
 - **Creación de Geocercas**: Los usuarios pueden definir una geocerca especificando un punto central (latitud, longitud) y un radio.
@@ -10,7 +10,7 @@ PeriferiApp es una aplicación móvil desarrollada con React Native y TypeScript
 - **Listado y Detalles**: Todas las geocercas creadas se guardan y se muestran en una lista. El usuario puede ver los detalles de cada una.
 - **Gestión de Favoritos**: Los usuarios pueden marcar y desmarcar geocercas como favoritas para un acceso rápido.
 
-## 🏗️ Arquitectura del Proyecto: Clean Architecture
+## Arquitectura del Proyecto: Clean Architecture
 
 El proyecto está estructurado siguiendo los principios de **Clean Architecture**. Esta arquitectura separa el software en capas, con una regla estricta de dependencia: las capas externas dependen de las internas, pero las internas no saben nada sobre las externas. Esto hace que la lógica de negocio (el núcleo de la aplicación) sea independiente de la base de datos, la interfaz de usuario y cualquier framework externo.
 
@@ -30,22 +30,22 @@ El proyecto está estructurado siguiendo los principios de **Clean Architecture*
 └──────────────────┘
 ```
 
-### 🔹 Capa de Dominio (`src/domain`)
+### Capa de Dominio (`src/domain`)
 
 Es el corazón de la aplicación. Contiene la lógica de negocio pura y no tiene dependencias de ninguna otra capa. Se divide en:
 
 - **Models**: Define las entidades de negocio (`Geofence`, `User`). Son estructuras de datos simples.
-- **Repositories (Interfaces)**: Define los contratos (`IFavoritesRepository`, `IGeofencesRepository`) que la capa de datos debe implementar. El dominio no sabe *cómo* se obtienen los datos, solo *qué* operaciones se pueden realizar.
+- **Repositories (Interfaces)**: Define los contratos (`IFavoritesRepository`, `IGeofencesRepository`) que la capa de datos debe implementar. El dominio no sabe _cómo_ se obtienen los datos, solo _qué_ operaciones se pueden realizar.
 - **Usecases**: Contiene las acciones específicas que un usuario puede realizar (`saveGeofence`, `addFavorite`, `isWithinGeofence`). Cada caso de uso encapsula una única pieza de lógica de negocio.
 
-### 🔹 Capa de Datos (`src/data`)
+### Capa de Datos (`src/data`)
 
 Implementa las interfaces de repositorio definidas en el dominio. Es responsable de decidir de dónde provienen los datos (API, base de datos local, etc.).
 
 - **Repositories (Implementations)**: Implementa los contratos del dominio. Por ejemplo, `GeofencesRepository` podría obtener datos de una API remota o del `AsyncStorage` local.
 - **API / Storage**: Lógica de bajo nivel para interactuar con fuentes de datos externas, como `AsyncStorage` o llamadas de red.
 
-### 🔹 Capa de Presentación (`src/presentation`)
+### Capa de Presentación (`src/presentation`)
 
 Es la capa de la interfaz de usuario (UI). Es responsable de mostrar los datos al usuario y de capturar sus interacciones.
 
@@ -67,7 +67,7 @@ El proyecto se adhiere a los principios SOLID para crear un software robusto y m
 
 - **(D) Principio de Inversión de Dependencias**: Este es el pilar de nuestra Clean Architecture. La capa de `Domain` no depende de la capa de `Data`; ambas dependen de abstracciones (las interfaces de repositorio). Esto permite que la lógica de negocio sea completamente independiente de los detalles de implementación de los datos.
 
-## 📁 Estructura de Directorios
+## Estructura de Directorios
 
 La estructura del proyecto refleja la separación de capas:
 
@@ -86,19 +86,21 @@ periferiapp/
 └── README.md
 ```
 
-## 🧪 Testing
+## Testing
 
 El proyecto cuenta con una estructura de tests centralizada en la carpeta `/tests`, que replica la estructura de `/src`. Esto facilita la localización de los tests y promueve una alta cobertura de código, asegurando la calidad y el correcto funcionamiento de la lógica de negocio y los componentes de la UI.
 
-## 🚀 Cómo Empezar
+## Cómo Empezar
 
 1.  **Clonar el repositorio**:
+
     ```bash
     git clone https://github.com/tu-usuario/periferiapp.git
     cd periferiapp
     ```
 
 2.  **Instalar dependencias**:
+
     ```bash
     npm install
     # o
@@ -106,9 +108,11 @@ El proyecto cuenta con una estructura de tests centralizada en la carpeta `/test
     ```
 
 3.  **Configurar el entorno**:
+
     - Si es necesario, crea un archivo `.env` con las variables de entorno requeridas.
 
 4.  **Ejecutar en iOS**:
+
     ```bash
     npx react-native run-ios
     ```
@@ -169,6 +173,7 @@ El proyecto cuenta con una estructura de tests centralizada en la carpeta `/test
 - **KISS (Keep It Simple, Stupid)**: Soluciones simples y directas, evitando complejidad innecesaria en la lógica y la estructura de componentes.
 
 - **Principios SOLID**:
+
   - **S**: Cada clase, función o módulo tiene una única responsabilidad (ejemplo: `User.ts` solo define el modelo de usuario).
   - **O**: El código es fácilmente extensible sin modificar lo existente, gracias al uso de interfaces y tipado fuerte (`IUserRepository`, `IFavoritesRepository`).
   - **L**: Las implementaciones pueden ser intercambiadas sin romper la funcionalidad, usando interfaces y patrones de inyección de dependencias.
@@ -178,6 +183,7 @@ El proyecto cuenta con una estructura de tests centralizada en la carpeta `/test
 - **Uso intensivo de TypeScript**: Tipado estricto en modelos, props y hooks. Se definen interfaces y tipos en `/src/domain/models` y `/src/domain/repositories`.
 
 - **Separación de capas**:
+
   - **Presentación**: Pantallas y componentes UI en `/src/presentation`.
   - **Dominio**: Modelos y contratos de negocio en `/src/domain`.
   - **Datos**: Acceso a APIs y persistencia local en `/src/data`.
@@ -190,7 +196,8 @@ El proyecto cuenta con una estructura de tests centralizada en la carpeta `/test
 
 - **Formateo y linting automáticos**: Configuración de ESLint y Prettier para mantener el código limpio y consistente en todo el proyecto.
 
-- **Convenciones de nombres y organización**: 
+- **Convenciones de nombres y organización**:
+
   - Archivos y carpetas en inglés y con nombres descriptivos.
   - Imports organizados por bloques (librerías externas, módulos internos, estilos, etc.).
   - Componentes y hooks nombrados con prefijo `use` cuando corresponde.
